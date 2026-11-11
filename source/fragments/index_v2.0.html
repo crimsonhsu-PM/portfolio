@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>許丹合｜軟體專案管理／系統分析作品集</title>
+<meta name="description" content="許丹合｜軟體專案管理／系統分析 作品集：把需求寫成規格，再把規格推到上線。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<link rel="stylesheet" href="css/pf-tokens.css">
+<style>
+/* Layout: same spec-book ink as the SA portfolio; amber marks system-analysis work, blue marks project-management work, so every case reads as two lanes */
+:root{--f-body:var(--font-body);--f-mono:var(--font-mono);--shadow:var(--shadow-card)}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:clip}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.7;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-bottom:env(safe-area-inset-bottom,0px)}
+a{color:var(--blue)}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--amber);outline-offset:2px;border-radius:6px}
+h1,h2,h3,h4{text-wrap:balance;margin:0;line-height:1.3}
+p{margin:0}
+.wrap{max-width:1160px;margin:0 auto}
+.eyebrow{font-family:var(--f-mono);font-size:12.5px;letter-spacing:.14em;color:var(--blue);text-transform:uppercase}
+.note{font-size:13.5px;color:var(--ink-3)}
+
+/* top bar */
+.bar{position:sticky;top:0;z-index:5;background:var(--sheet);border-bottom:1px solid var(--rule);padding-top:env(safe-area-inset-top,0px);
+  margin-left:calc(-1*max(16px,env(safe-area-inset-left,0px)));margin-right:calc(-1*max(16px,env(safe-area-inset-right,0px)));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:8px 20px;flex-wrap:wrap;padding-block:8px}
+.brand{display:flex;gap:10px;text-decoration:none;color:var(--ink);min-height:40px;align-items:center}
+.brand b{font-size:16px;letter-spacing:.04em}
+.brand span{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-3);letter-spacing:.12em}
+.nav{display:flex;flex-wrap:wrap;gap:2px}
+.nav a{color:var(--ink-2);text-decoration:none;font-size:14.5px;padding:8px 12px;border-radius:8px}
+.nav a:hover{background:var(--blue-soft);color:var(--navy)}
+.nav a.soon{color:var(--ink-3)}
+@media (max-width:700px){.bar{position:static}.nav{flex-wrap:nowrap;overflow-x:auto;width:100%}.nav a{white-space:nowrap}}
+
+/* hero */
+.hero{padding-block:56px 48px;display:grid;gap:32px}
+.who{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 22px}
+.who h1{font-size:clamp(44px,7vw,64px);font-weight:900;letter-spacing:.08em}
+.who .jt{font-size:clamp(20px,2.6vw,26px);font-weight:700;color:var(--ink-2)}
+.thesis{font-size:clamp(22px,3.2vw,32px);font-weight:700;line-height:1.5;max-width:28em;color:var(--navy)}
+.thesis em{font-style:normal;color:var(--amber)}
+.thesis strong{font-weight:700;color:var(--blue)}
+.meta{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:14.5px;color:var(--ink-3)}
+
+/* lifecycle map */
+.life{background:var(--sheet);border:1px solid var(--rule);border-radius:14px;padding:22px;display:grid;gap:14px;box-shadow:var(--shadow)}
+.life-h{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;align-items:baseline}
+.life-h b{font-size:16px}
+.key{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--ink-3)}
+.key i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.key .ks{background:var(--amber-soft);border:1px solid var(--amber)}
+.key .kp{background:var(--blue-soft);border:1px solid var(--blue)}
+.key .kb{background:linear-gradient(90deg,var(--amber-soft) 50%,var(--blue-soft) 50%);border:1px solid var(--ink-3)}
+.lmap{overflow-x:auto}
+.hero>*,.sec>*,.step>*,.life,.wide{min-width:0}
+.lgrid{display:grid;grid-template-columns:minmax(150px,1.3fr) repeat(5,minmax(104px,1fr));gap:6px;min-width:720px}
+.lband{font-size:12px;font-weight:700;letter-spacing:.08em;text-align:center;padding:4px;border-radius:6px}
+.lband.sa{grid-column:span 2;color:var(--amber);background:var(--amber-soft)}
+.lband.pm{grid-column:span 2;color:var(--blue);background:var(--blue-soft)}
+.lband.both{color:var(--ink-2);background:var(--paper)}
+.lstage{display:grid;gap:0;padding:8px 10px;border-bottom:2px solid var(--ink)}
+.lstage .n{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-3)}
+.lstage b{font-size:15.5px}
+.lcase{display:flex;flex-direction:column;justify-content:center;gap:0;padding:8px 10px;border-radius:8px;text-decoration:none;color:var(--ink);background:var(--paper)}
+a.lcase:hover{background:var(--blue-soft)}
+.lcase .id{font-family:var(--f-mono);font-size:11.5px;color:var(--blue);letter-spacing:.08em}
+.lcase b{font-size:14.5px;line-height:1.4}
+.lcase small{font-size:12px;color:var(--ink-3)}
+.cell{font-size:13px;line-height:1.45;padding:8px 10px;border-radius:8px;display:flex;align-items:center}
+.cell.s{background:var(--amber-soft);border:1px solid var(--amber-line)}
+.cell.p{background:var(--blue-soft);border:1px solid var(--blue-line)}
+.cell.x{border:1px dashed var(--rule);color:var(--ink-3);justify-content:center}
+
+/* proof cards */
+.proof{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:1000px){.proof{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.proof{grid-template-columns:1fr}}
+.pc{display:flex;flex-direction:column;gap:6px;background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:18px;text-decoration:none;color:var(--ink);box-shadow:var(--shadow)}
+.pc:hover{border-color:var(--blue)}
+.pc .lane{align-self:flex-start;font-size:11.5px;font-weight:700;letter-spacing:.06em;border-radius:4px;padding:1px 8px}
+.pc .lane.p{background:var(--blue-soft);color:var(--blue)}
+.pc .lane.s{background:var(--amber-soft);color:var(--amber)}
+.pc .big{font-family:var(--f-mono);font-size:34px;font-weight:600;line-height:1.1;color:var(--navy);font-variant-numeric:tabular-nums}
+.pc b{font-size:16.5px;line-height:1.4}
+.pc .ev{font-size:14px;color:var(--ink-2);line-height:1.6;flex-grow:1}
+.pc .go{font-size:13px;color:var(--blue)}
+
+/* sections & case */
+section,[id]{scroll-margin-top:72px}
+.sec{padding-block:56px;border-top:1px solid var(--rule);display:grid;gap:28px}
+.case-h{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px 32px;align-items:start}
+@media (max-width:860px){.case-h{grid-template-columns:1fr}}
+.case-h .id{font-family:var(--f-mono);font-size:13px;color:var(--ink-3);letter-spacing:.1em}
+.case-h h2{font-size:clamp(26px,3.4vw,34px);font-weight:900;margin-top:4px}
+.case-h .sub{font-size:14.5px;color:var(--ink-3);margin-top:6px}
+.mine{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:16px 18px;display:grid;gap:6px}
+.mine small{font-size:12px;font-weight:700;color:var(--ink-3);letter-spacing:.06em}
+.mine b{font-size:19px}
+.mine p{font-size:14.5px;color:var(--ink-2)}
+
+.car{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:900px){.car{grid-template-columns:1fr}}
+.car div{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:16px 18px;display:grid;gap:6px;align-content:start}
+.car .k{font-size:12.5px;font-weight:700;color:var(--ink-3);letter-spacing:.06em}
+.car p{font-size:15px;color:var(--ink-2)}
+.car .r{border-color:var(--ink-3)}
+.car .r p{color:var(--ink)}
+
+.lanes{display:grid;grid-template-columns:1fr 1fr;border-radius:12px;overflow:hidden;border:1px solid var(--rule)}
+@media (max-width:760px){.lanes{grid-template-columns:1fr}}
+.lanes > div{padding:14px 18px;display:grid;gap:6px;align-content:start}
+.lanes .s{background:var(--amber-soft)}
+.lanes .p{background:var(--blue-soft)}
+.lanes b{font-size:13px;letter-spacing:.06em}
+.lanes .s b{color:var(--amber)}
+.lanes .p b{color:var(--blue)}
+.lanes ul{margin:0;padding-left:18px;font-size:14.5px;color:var(--ink-2);display:grid;gap:3px}
+
+.grp{display:grid;gap:14px}
+.grp-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px}
+.grp-h h3{font-size:20px;font-weight:900}
+.tagl{font-size:12px;font-weight:700;border-radius:4px;padding:1px 8px}
+.tagl.p{background:var(--blue-soft);color:var(--blue)}
+.tagl.s{background:var(--amber-soft);color:var(--amber)}
+.ev2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:900px){.ev2{grid-template-columns:1fr}}
+.panel{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:18px;display:grid;gap:12px;align-content:start;min-width:0}
+.panel h4{font-size:16.5px}
+.panel .lead{font-size:14.5px;color:var(--ink-2)}
+
+/* release gates */
+.gates{display:grid;gap:10px}
+.gate{display:grid;grid-template-columns:78px minmax(0,1fr);gap:10px;align-items:center}
+.gate > span{font-size:12.5px;font-weight:700;color:var(--ink-3);text-align:center;background:var(--paper);border-radius:6px;padding:6px 4px}
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}
+.chip{background:var(--sheet);border:1px solid var(--rule);border-radius:6px;padding:3px 8px;font-size:13px;white-space:nowrap}
+.chip.on{background:var(--navy);color:var(--sheet);border-color:var(--navy)}
+.chip em{font-style:normal;font-size:11px;color:var(--ink-3);margin-left:4px}
+.chip.on em{color:var(--sheet);opacity:.75}
+.arr{color:var(--ink-3);font-size:12px}
+.loopn{font-size:13px;color:var(--blue);border:1px dashed var(--blue);border-radius:8px;padding:6px 10px}
+
+/* tables */
+.tblw{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th,.tbl td{border-bottom:1px solid var(--rule);padding:8px 10px;text-align:left;vertical-align:top}
+.tbl thead th{background:var(--paper);font-size:12.5px;color:var(--ink-3);font-weight:700;white-space:nowrap}
+.tbl tbody th{font-weight:700;white-space:nowrap}
+.tbl td.dec{color:var(--ink);font-weight:500}
+
+/* batch board */
+.board{display:grid;gap:8px}
+.brow{display:grid;grid-template-columns:64px 40px minmax(0,1fr);gap:10px;align-items:center;font-size:13px}
+.brow > b{font-size:13.5px}
+.brow > span{font-family:var(--f-mono);color:var(--ink-3);font-size:12.5px;text-align:right}
+.segs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:3px}
+.seg{height:22px;border-radius:4px;background:var(--paper);border:1px solid var(--rule);font-size:11px;display:flex;align-items:center;justify-content:center;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.seg.d{background:var(--done-soft);border-color:var(--done);color:var(--done);font-weight:700}
+.seg.w{background:var(--wip-soft);border-color:var(--wip);color:var(--wip)}
+.bhead{display:grid;grid-template-columns:64px 40px minmax(0,1fr);gap:10px;font-size:11.5px;color:var(--ink-3)}
+.bhead .segs div{text-align:center}
+.scope{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13.5px;color:var(--ink-2);background:var(--paper);border-radius:8px;padding:10px 12px}
+.scope b{color:var(--ink)}
+
+/* review phases */
+.phases{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:560px){.phases{grid-template-columns:1fr 1fr}}
+.phases.p3{grid-template-columns:repeat(3,minmax(0,1fr))}@media (max-width:640px){.phases.p3{grid-template-columns:1fr}}
+.ph{background:var(--paper);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--ink-2);display:grid;gap:4px;align-content:start}
+.ph b{font-size:14px;color:var(--navy)}
+.ph .br{font-size:12.5px;color:var(--amber);font-weight:500}
+.stamp{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.stamp span{font-size:13.5px;font-weight:700;color:var(--done);background:var(--done-soft);border:1px solid var(--done);border-radius:999px;padding:3px 12px}
+
+/* integration */
+.caps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:820px){.caps{grid-template-columns:1fr}}
+.cap{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:16px 18px;display:grid;gap:4px;align-content:start}
+.cap .cn{font-family:var(--f-mono);font-size:30px;font-weight:600;color:var(--amber);line-height:1}
+.cap b{font-size:17px}
+.cap span:last-child{font-size:14.5px;color:var(--ink-2)}
+.miniflow{display:grid;grid-template-columns:auto minmax(0,1fr) auto minmax(0,1fr) auto;gap:10px;align-items:center;background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:18px}
+.mf-n{background:var(--navy);color:var(--sheet);font-weight:700;font-size:15px;border-radius:8px;padding:12px 16px;text-align:center;white-space:nowrap}
+.mf-a{display:grid;gap:6px;text-align:center;font-size:13.5px;color:var(--ink-2)}
+.mf-a span{border-bottom:2px solid var(--rule);padding-bottom:4px}
+@media (max-width:820px){.miniflow{grid-template-columns:1fr}.mf-a span{border:0}}
+.rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:900px){.rules{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.rules{grid-template-columns:1fr}}
+.rule{background:var(--sheet);border:1px solid var(--rule);border-radius:10px;padding:12px 14px;display:grid;gap:4px;align-content:start}
+.rule b{font-size:14.5px}
+.rule span{font-size:14px;color:var(--ink-2)}
+
+/* dependency timeline */
+.dep{display:grid;gap:6px}
+.drow{display:grid;grid-template-columns:116px minmax(0,1fr);gap:10px;align-items:center;font-size:13px}
+.drow > b{font-size:13px;color:var(--ink-2)}
+.dtrack{position:relative;height:26px;background:var(--paper);border-radius:6px}
+.dbar{position:absolute;top:3px;bottom:3px;border-radius:4px;background:var(--blue-soft);border:1px solid var(--blue);font-size:11.5px;color:var(--navy);display:flex;align-items:center;padding:0 6px;white-space:nowrap;overflow:hidden}
+.dbar.qa{background:var(--done-soft);border-color:var(--done);color:var(--done)}
+.dscale{display:grid;grid-template-columns:116px minmax(0,1fr);gap:10px;font-size:11.5px;color:var(--ink-3);font-family:var(--f-mono)}
+.dscale div:last-child{position:relative;height:16px}.dscale div:last-child span{position:absolute;transform:translateX(-50%)}.dscale div:last-child span:first-child{transform:none}.dscale div:last-child span:last-child{transform:translateX(-100%)}
+
+/* details */
+details.more{border:1px dashed var(--rule);border-radius:12px;padding:12px 16px;background:var(--sheet)}
+details.more[open]{display:grid;gap:18px}
+details.more summary{cursor:pointer;font-weight:700;color:var(--blue);font-size:15px;min-height:32px;display:flex;align-items:center}
+.wide{display:grid;gap:10px}
+.wide h4{font-size:16.5px}
+.seq{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:12px;overflow-x:auto}
+.seq svg{display:block;min-width:720px;width:100%;height:auto}
+.seq .ll{stroke:var(--rule);stroke-width:2;stroke-dasharray:4 4}
+.seq .hd rect{fill:var(--navy)}
+.seq .hd text{fill:var(--sheet);font-size:13px;font-weight:700}
+.seq .m line{stroke:var(--ink-2);stroke-width:1.6}
+.seq .m.r line{stroke-dasharray:5 4;stroke:var(--ink-3)}
+.seq .m text{fill:var(--ink);font-size:12.5px}
+.seq .ph2 rect{fill:var(--blue-soft)}
+.seq .ph2 text{fill:var(--blue);font-size:12.5px;font-weight:700}
+.seq .ah{fill:var(--ink-2)}
+.ok{color:var(--done);font-weight:700}.wipt{color:var(--wip);font-weight:700}.na{color:var(--ink-3)}
+
+.btn{display:inline-flex;align-items:center;gap:6px;min-height:42px;padding:0 16px;border-radius:8px;background:var(--navy);color:var(--sheet);text-decoration:none;font-weight:700;font-size:14px;align-self:flex-start;justify-self:start}
+.btn:hover{filter:brightness(1.1)}
+.btn::after{content:"↗";font-weight:500}
+.btn.tool{background:var(--amber);margin-top:6px;min-height:46px;font-size:15px}
+.tooln{font-size:13px;color:var(--ink-3)}
+.pending{border:1px dashed var(--rule);border-radius:12px;padding:20px;color:var(--ink-3);font-size:14.5px;background:var(--sheet)}
+
+/* course */
+.course{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:900px){.course{grid-template-columns:1fr}}
+.vid{display:block;position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--rule);box-shadow:var(--shadow);text-decoration:none;color:var(--ink);background:var(--sheet)}
+.vid img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+.vid .play{position:absolute;left:50%;top:38%;transform:translate(-50%,-50%);width:76px;height:76px;border-radius:50%;background:rgba(22,36,58,.78);display:flex;align-items:center;justify-content:center}
+.vid .play::after{content:"";border-left:24px solid #fff;border-top:15px solid transparent;border-bottom:15px solid transparent;margin-left:6px}
+.vid:hover .play{background:var(--amber)}
+.vid-b{padding:14px 18px;display:grid;gap:2px}
+.vid-b .k{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;color:var(--amber)}
+.vid-b b{font-size:17px}
+.vid-b small{font-size:13.5px;color:var(--ink-3)}
+.cside{display:grid;gap:12px}
+.links{display:flex;flex-wrap:wrap;gap:8px}
+.btn.ghost{background:transparent;color:var(--blue);border:1px solid var(--blue)}
+.dids{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:900px){.dids{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.dids{grid-template-columns:1fr}}
+.did{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:16px 18px;display:grid;gap:6px;align-content:start}
+.did b{font-size:16.5px}
+.did p{font-size:14.5px;color:var(--ink-2)}
+.tagl.a{background:var(--paper);color:var(--ink-2);border:1px solid var(--rule)}
+.cert{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;background:var(--sheet);border:1px dashed var(--blue);border-radius:12px;padding:12px 18px;font-size:14.5px}
+.cert b{color:var(--blue);font-size:13px;letter-spacing:.06em}
+
+.rflow{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:8px;overflow-x:auto}
+.rflow svg{display:block;min-width:900px;width:100%;height:auto}
+.rflow text{font-family:var(--f-body);font-size:13px;fill:var(--ink)}
+.rflow .l1 rect{fill:var(--amber-soft)}.rflow .l2 rect{fill:var(--blue-soft)}.rflow .l3 rect{fill:var(--done-soft)}.rflow .l4 rect{fill:var(--wip-soft)}
+.rflow .lane > rect:first-child{stroke:var(--rule);stroke-width:1}
+.rflow .hd{fill:var(--navy)!important}
+.rflow .lane text{fill:var(--sheet);font-weight:700;font-size:13.5px}
+.rflow .bx rect,.rflow .lst rect{fill:var(--sheet);stroke:var(--ink-2);stroke-width:1.2}
+.rflow .bx.sm text{font-size:12px}
+.rflow .bx.end rect{fill:var(--navy)}.rflow .bx.end text{fill:var(--sheet);font-weight:700}
+.rflow .lst text{font-size:12.5px}.rflow .lst .lh{font-weight:700;fill:var(--navy)}
+.rflow .dm path{fill:var(--sheet);stroke:var(--amber);stroke-width:1.5}
+.rflow .dm text{font-size:12.5px;font-weight:700}
+.rflow .ln{fill:none;stroke:var(--ink-2);stroke-width:1.4}
+.rflow .ahd{fill:var(--ink-2)}
+.rflow .yn{font-family:var(--f-mono);font-size:12px;font-weight:600;fill:var(--amber)}
+
+.steps-toc{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14px;color:var(--ink-3)}
+.steps-toc a{display:inline-flex;gap:6px;align-items:center;text-decoration:none;color:var(--ink-2);background:var(--sheet);border:1px solid var(--rule);border-radius:999px;padding:6px 14px;min-height:36px}
+.steps-toc a b{font-family:var(--f-mono);color:var(--blue);font-weight:600}
+.steps-toc a:hover{border-color:var(--blue)}
+.steps{display:grid;gap:18px;counter-reset:none}
+.step{background:var(--sheet);border:1px solid var(--rule);border-radius:14px;padding:22px 24px;display:grid;gap:14px;box-shadow:var(--shadow);border-left:6px solid var(--blue)}
+.step:has(.tagl.s){border-left-color:var(--amber)}
+.step-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px}
+.step-h .sn{font-family:var(--f-mono);font-size:28px;font-weight:600;color:var(--ink-3);line-height:1}
+.step-h h3{font-size:21px;font-weight:900}
+.how{font-size:15.5px;color:var(--ink-2);max-width:62em}
+.eh{font-size:14px;color:var(--ink-3);font-weight:700}
+.gatebox{background:var(--paper);border-radius:12px;padding:16px;display:grid;gap:10px}
+
+.fa{display:grid;gap:8px;background:var(--paper);border-radius:12px;padding:16px}
+.fa-row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px;align-items:center}
+.fa-m{background:var(--navy);color:var(--sheet);font-weight:700;font-size:14px;border-radius:8px;padding:8px 10px;text-align:center}
+.fa-c{display:flex;flex-wrap:wrap;gap:6px}
+.fa-c span{font-size:13px;border:1px solid var(--rule);background:var(--sheet);border-radius:6px;padding:4px 8px}
+.fa-c span.hl{background:var(--amber-soft);border:2px solid var(--amber);font-weight:700}
+@media (max-width:640px){.fa-row{grid-template-columns:1fr}}
+div.dec{background:var(--amber-soft);border:1px solid var(--amber-line);border-radius:12px;padding:16px 18px;display:grid;gap:8px}
+.dec small{font-size:12px;font-weight:700;color:var(--amber);letter-spacing:.06em}
+.dec b{font-size:17px}
+.dec ol{margin:0;padding-left:20px;font-size:14.5px;color:var(--ink-2);display:grid;gap:4px}
+.dec ol li.pick{color:var(--ink);font-weight:700}
+.dec p{font-size:14.5px;color:var(--ink-2)}
+.road{display:flex;flex-wrap:wrap;gap:8px}
+.road div{background:var(--paper);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--ink-2);flex:1 1 150px;display:grid;gap:2px;align-content:start}
+.road strong{color:var(--blue);font-family:var(--f-mono);font-size:15px}
+.ph6{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px}
+.ph6 span{background:var(--blue-soft);border:1px solid var(--blue-line);color:var(--navy);border-radius:6px;text-align:center;padding:6px 0;font-family:var(--f-mono);font-weight:600;font-size:14px}
+.roles3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:760px){.roles3{grid-template-columns:1fr}}
+.roles3 div{background:var(--paper);border-radius:10px;padding:12px 14px;display:grid;gap:2px;align-content:start}
+.roles3 .me{background:var(--amber-soft);border:1px solid var(--amber-line)}
+.roles3 small{font-size:11.5px;font-weight:700;color:var(--ink-3);letter-spacing:.06em}
+.roles3 b{font-size:17px}
+.roles3 span{font-size:13.5px;color:var(--ink-2)}
+.vid.erp{max-width:760px}
+.vid.erp img{aspect-ratio:auto}
+.vid.erp .play{top:50%}
+.tagl.a{background:var(--paper);color:var(--ink-2);border:1px solid var(--rule)}
+.links{display:flex;flex-wrap:wrap;gap:8px}
+
+/* hero: ability figure */
+.hero{padding-block:0 48px;gap:28px}
+.band{box-sizing:border-box;--bd:#132238;--bd2:#1B3050;--bl:#2B4466;--bt:#E9EEF5;--bt2:#A9B7CA;--sa:#E8995C;--pm:#7FB0E6;--ai:#B9C2CE;--base:#D9C9A8;
+  position:relative;color:var(--bt);background:var(--bd);border-radius:0 0 22px 22px;padding:48px 32px 36px;display:grid;gap:18px;overflow:hidden;
+  width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
+  background-image:linear-gradient(var(--bd2) 1px,transparent 1px),linear-gradient(90deg,var(--bd2) 1px,transparent 1px);background-size:44px 44px;background-position:center top}
+.band > *{max-width:1160px;width:100%;margin-inline:auto}
+.band .who h1{color:#fff}
+.band .who .jt{color:var(--bt2)}
+.band .thesis{color:var(--bt)}
+.band .thesis strong{color:var(--pm)}
+.band .thesis em{color:var(--sa)}
+.band .meta{color:var(--bt2)}
+.stage{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,360px) minmax(0,1fr);gap:24px;align-items:center;margin-top:8px}
+.wires{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:1}
+.wires path{fill:none;stroke:var(--bt2);stroke-width:1.4;stroke-dasharray:4 5;opacity:.55;transition:opacity .2s,stroke .2s}
+.wires path.on{stroke-dasharray:none;stroke-width:2;opacity:1}
+.wires path.sa.on{stroke:var(--sa)}.wires path.pm.on{stroke:var(--pm)}.wires path.ai.on{stroke:var(--ai)}.wires path.base.on{stroke:var(--base)}
+.wires path.draw{animation:draw 1.1s ease-out both}
+@keyframes draw{from{stroke-dashoffset:400}to{stroke-dashoffset:0}}
+.col{display:grid;gap:18px;position:relative;z-index:2}
+.figure{position:relative;z-index:0;align-self:end}
+.figure img{position:relative;display:block;width:100%;height:auto;z-index:1;-webkit-mask-image:linear-gradient(#000 82%,transparent);mask-image:linear-gradient(#000 82%,transparent)}
+.halo{position:absolute;left:8%;right:8%;top:6%;aspect-ratio:1;border-radius:50%;border:1px solid var(--bl);background:radial-gradient(circle,#22406A 0%,transparent 68%);z-index:0}
+.dot{position:absolute;z-index:3;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--bd);border:3px solid var(--bt);box-shadow:0 0 0 0 rgba(233,238,245,.5);animation:pulse 2.4s infinite}
+.dot.sa{border-color:var(--sa)}.dot.pm{border-color:var(--pm)}.dot.ai{border-color:var(--ai)}.dot.base{border-color:var(--base)}
+.dot[data-k="feet"]{margin-top:-18px}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(233,238,245,.45)}70%{box-shadow:0 0 0 12px rgba(233,238,245,0)}100%{box-shadow:0 0 0 0 rgba(233,238,245,0)}}
+.tp{all:unset;box-sizing:border-box;cursor:pointer;display:grid;gap:2px;background:rgba(19,34,56,.86);border:1px solid var(--bl);border-radius:12px;padding:12px 14px;color:var(--bt);transition:border-color .2s,background .2s,transform .2s}
+.tp:hover{border-color:var(--bt2);transform:translateY(-1px)}
+.tp:focus-visible{outline:3px solid var(--sa);outline-offset:2px}
+.tp-n{font-family:var(--f-mono);font-size:12px;color:var(--bt2)}
+.tp b{font-size:16.5px;font-weight:700}
+.tp-s{font-size:13.5px;color:var(--bt2)}
+.tp[aria-pressed="true"]{background:#1E3658}
+.tp.sa[aria-pressed="true"]{border-color:var(--sa)}.tp.pm[aria-pressed="true"]{border-color:var(--pm)}.tp.ai[aria-pressed="true"]{border-color:var(--ai)}.tp.base[aria-pressed="true"]{border-color:var(--base)}
+.tp.sa b{color:#FFD2AE}.tp.pm b{color:#CFE3FA}
+.hint{font-size:13px;color:var(--bt2);text-align:center}
+.tpanel{background:var(--sheet);color:var(--ink);border-radius:14px;padding:22px 24px;box-shadow:var(--shadow)}
+.tpp{display:grid;gap:12px}
+.tpp[hidden]{display:none}
+.tpp-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px}
+.tpp-h h3{font-size:21px;font-weight:900}
+.tagl.ai,.tagl.base{background:var(--paper);color:var(--ink-2);border:1px solid var(--rule)}
+.tpd{font-size:15.5px;color:var(--ink-2);max-width:62em}
+.tpe small{font-size:12px;font-weight:700;color:var(--ink-3);letter-spacing:.06em}
+.tpe ul{margin:6px 0 0;padding-left:18px;display:grid;gap:4px;font-size:15px}
+.tl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.tl li{border-top:3px solid var(--navy);padding-top:8px;display:grid;gap:1px}
+.tl li:last-child{border-top-color:var(--amber)}
+.tl span{font-family:var(--f-mono);font-size:12px;color:var(--ink-3)}
+.tl b{font-size:15px}
+.tl small{font-size:12.5px;color:var(--ink-3)}
+@media (max-width:860px){.tl{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:820px){
+  .band{padding:32px 18px 28px}
+  .stage{grid-template-columns:1fr 1fr;gap:12px}
+  .figure{grid-column:1/-1;grid-row:1;max-width:280px;justify-self:center}
+  .col{gap:10px}
+  .wires{display:none}
+}
+@media (prefers-reduced-motion: reduce){.dot{animation:none}.wires path.draw{animation:none}.tp{transition:none}}
+footer{border-top:1px solid var(--rule);padding-block:28px 40px;font-size:13.5px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:6px 20px;justify-content:space-between}
+
+.tagl.sa{background:var(--amber-soft);color:var(--amber)}
+.tagl.pm{background:var(--blue-soft);color:var(--blue)}
+.bar{background:#132238;border-bottom-color:#2B4466}
+.bar .brand,.bar .brand b{color:#fff}
+.bar .brand span{color:#A9B7CA}
+.bar .nav a{color:#C9D4E2}
+.bar .nav a:hover{background:#1E3658;color:#fff}
+footer{background:#132238;color:#A9B7CA;border-top:0;border-radius:16px;padding-inline:24px;margin-bottom:24px}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="#top"><b>軟體專案管理／系統分析作品集</b><span>PORTFOLIO 2026</span></a>
+    <nav class="nav" aria-label="作品集目錄">
+      <a href="#course">AI 課程專題</a>
+      <a href="#case1">01 機台＋SLOT</a>
+      <a href="#case2">02 營運後台</a>
+      <a href="#case3">03 多語言資源平台</a>
+      <a href="#case4">04 輕量 ERP</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="top">
+
+  <section class="hero" aria-labelledby="name">
+    <div class="band">
+      <div class="who">
+        <h1 id="name">許丹合</h1>
+        <span class="jt">軟體專案管理／系統分析</span>
+      </div>
+      <p class="thesis">從需求到上線，我把每一段<strong>串起來</strong>：<br>先寫成團隊能開發、QA 能驗收的<em>規格</em>，再<strong>推到上線</strong>。</p>
+      <div class="meta"><span>近 8 年系統分析與企劃經驗，近年擔任軟體開發專案管理</span><span>工作地點：台中／遠端</span></div>
+      <div class="stage" id="stage">
+        <svg class="wires" id="wires" aria-hidden="true"></svg>
+        <div class="col left"><button class="tp sa" type="button" data-k="head" aria-controls="tpanel" aria-pressed="true"><span class="tp-n">01</span><b>頭｜把需求想清楚</b><span class="tp-s">口述需求 → 功能架構 → 規格</span></button><button class="tp sa" type="button" data-k="larm" aria-controls="tpanel" aria-pressed="false"><span class="tp-n">03</span><b>左手｜把規則畫出來</b><span class="tp-s">泳道圖、介接規則、原型</span></button><button class="tp base" type="button" data-k="trunk" aria-controls="tpanel" aria-pressed="false"><span class="tp-n">05</span><b>軀幹｜8 年經歷</b><span class="tp-s">從企劃一路走到專案管理</span></button></div>
+        <div class="figure" id="figure">
+          <div class="halo" aria-hidden="true"></div>
+          <img src="img/portrait.webp" alt="許丹合" width="600" height="917">
+          <span class="dot sa" data-k="head" style="left:50%;top:13%"></span><span class="dot pm" data-k="mouth" style="left:51%;top:31%"></span><span class="dot sa" data-k="larm" style="left:13%;top:66%"></span><span class="dot ai" data-k="rarm" style="left:88%;top:66%"></span><span class="dot base" data-k="trunk" style="left:50%;top:55%"></span><span class="dot pm" data-k="feet" style="left:50%;top:100%"></span>
+        </div>
+        <div class="col right"><button class="tp pm" type="button" data-k="mouth" aria-controls="tpanel" aria-pressed="false"><span class="tp-n">02</span><b>嘴｜把團隊對齊</b><span class="tp-s">例會、三地週會、專題主講</span></button><button class="tp ai" type="button" data-k="rarm" aria-controls="tpanel" aria-pressed="false"><span class="tp-n">04</span><b>右手｜把規格做成系統</b><span class="tp-s">規格交給 AI 實作，我驗收</span></button><button class="tp pm" type="button" data-k="feet" aria-controls="tpanel" aria-pressed="false"><span class="tp-n">06</span><b>雙腳｜把進度推到上線</b><span class="tp-s">WBS、發版關卡、評鑑送審</span></button></div>
+      </div>
+      <p class="hint">點任一個標籤，看說明、證據和 Demo</p>
+      <div class="tpanel" id="tpanel" aria-live="polite"><div class="tpp" data-k="head"><div class="tpp-h"><span class="tagl sa">系統分析</span><h3>頭｜把需求想清楚</h3></div><p class="tpd">把主管的口述需求、兩年的 Excel 營運規則、團隊交接的痛點，整理成功能架構和可以開發、可以驗收的規格。</p><div class="tpe"><small>看證據</small><ul><li><a href="#case2-s1">營運後台：口述需求整理成功能架構</a></li><li><a href="#case3-s2">多語言資源平台：PRD → 85 頁 SRS</a></li><li><a href="#case4-s2">輕量 ERP：營運規則寫成可驗收的規格</a></li></ul></div><div class="links"><a class="btn" href="https://drive.google.com/file/d/1pf7vYh--Ub0YVenQMFYzyg22fSGpTIJp/view">看 SRS 正式版</a></div></div><div class="tpp" data-k="mouth" hidden><div class="tpp-h"><span class="tagl pm">專案管理</span><h3>嘴｜把團隊對齊</h3></div><p class="tpd">主持 13 次進度同步例會，把議題追到結論；協調日本、馬爾他、台灣三地團隊進測；課程專題擔任統籌與提報主講。</p><div class="tpe"><small>看證據</small><ul><li><a href="#c1-s1">機台專案：例會決策紀錄</a></li><li><a href="#case2-s4">營運後台：三地進測與交接</a></li><li><a href="#course">AI 課程專題：統籌與主講</a></li></ul></div><div class="links"><a class="btn" href="https://claude.ai/artifact/XNKEZMA4UpFVHkK8yWPV3R">看提報簡報</a></div></div><div class="tpp" data-k="larm" hidden><div class="tpp-h"><span class="tagl sa">系統分析</span><h3>左手｜把規則畫出來</h3></div><p class="tpd">把文字說不清的流程和規則畫出來：送審泳道圖、機台介接的資料流向與例外規則、規格取捨，再用原型確認畫面說得通。</p><div class="tpe"><small>看證據</small><ul><li><a href="#c1-s3">評鑑送審泳道圖</a></li><li><a href="#c1-s4">機台介接：資料流向與 6 條例外規則</a></li><li><a href="#case2-s2">營運後台：規格取捨與 3 頁原型</a></li></ul></div><div class="links"><a class="btn" href="https://agent-wallet-portfolio-demo.lazyer1016.chatgpt.site/">代理錢包原型</a><a class="btn ghost" href="https://data-overview-dashboard-xudanhe.lazyer1016.chatgpt.site/">數據總覽原型</a></div></div><div class="tpp" data-k="rarm" hidden><div class="tpp-h"><span class="tagl ai">AI 協作</span><h3>右手｜把規格做成系統</h3></div><p class="tpd">我不寫程式。我定義規則、決定每一個規格問題，讓 AI 照規格開發，最後由我驗收；規格沒寫清楚的地方，先改規格再改程式。</p><div class="tpe"><small>看證據</small><ul><li><a href="#case3-s3">多語言資源平台：分階段開發與 AI 分工</a></li><li><a href="#case4-s1">輕量 ERP：1 分鐘產品展示</a></li></ul></div><div class="links"><a class="btn" href="https://unv-plan-erp-demo.lazyer1016.chatgpt.site/login">ERP Demo</a><a class="btn ghost" href="https://multilingual-resource-platform-v2.lazyer1016.chatgpt.site/">多語言資源平台 Demo</a><a class="btn ghost" href="https://rsg-project-plan.lazyer1016.chatgpt.site/">專案管理工具 Demo</a></div></div><div class="tpp" data-k="trunk" hidden><div class="tpp-h"><span class="tagl base">經歷</span><h3>軀幹｜8 年經歷</h3></div><p class="tpd">遊戲企劃 → 產品經理 → 系統企劃 → 產品企劃 → 專案管理。不同產品，同一件事：先把需求和規則釐清，再讓團隊朝同一個上線日推進。</p><ol class="tl"><li><span>2016–2019</span><b>遊戲企劃</b><small>傳奇網路</small></li><li><span>2020–2022</span><b>產品經理</b><small>恩威管理顧問</small></li><li><span>2022–2024</span><b>系統企劃</b><small>未來軟體開發</small></li><li><span>2024–2025</span><b>產品企劃</b><small>Skyline</small></li><li><span>2026</span><b>專案管理師</b><small>安特國際</small></li><li><span>2026 起</span><b>專題統籌</b><small>AI 人才培訓班</small></li></ol></div><div class="tpp" data-k="feet" hidden><div class="tpp-h"><span class="tagl pm">專案管理</span><h3>雙腳｜把進度推到上線</h3></div><p class="tpd">用 WBS 與甘特圖排程，把發版固定成有關卡的輪次，參與機台 V1–V17 版本進測；接手送審後重建流程，三種機台版本均通過評鑑。</p><div class="tpe"><small>看證據</small><ul><li><a href="#c1-s2">發版關卡：每一輪都走同樣四步</a></li><li><a href="#c1-s3">評鑑送審：3／3 通過</a></li><li><a href="#case2-s3">營運後台：分期交付</a></li></ul></div><div class="links"><a class="btn" href="https://rsg-project-plan.lazyer1016.chatgpt.site/">專案管理工具 Demo</a></div></div></div>
+    </div>
+    <div class="proof">
+      <a class="pc" href="#review"><span class="lane p">專案管理</span><span class="big">3／3</span><b>機台版本通過評鑑</b><span class="ev">十一、十三、十六合一三種版本。接手時沒有交接資料，送審流程由我重建。</span><span class="go">看送審流程 ↓</span></a>
+      <a class="pc" href="#release"><span class="lane p">專案管理</span><span class="big">V1–V17</span><b>機台版本進測</b><span class="ev">每一輪走固定關卡，UAT 通過後再做 Prod、合併與升級測試。</span><span class="go">看發版關卡 ↓</span></a>
+      <a class="pc" href="#case2-s4"><span class="lane p">專案管理</span><span class="big">3 地</span><b>日本・馬爾他・台灣</b><span class="ev">營運後台拆成多期交付，協調三地團隊的開發與進測。</span><span class="go">看三地進測 ↓</span></a>
+      <a class="pc" href="#case3-s2"><span class="lane s">系統分析</span><span class="big">85 頁</span><b>自寫 PRD → SRS</b><span class="ev">規格完整到 AI 能照著開發，完整版 API 與端對端測試全數通過。</span><span class="go">看 PRD → SRS ↓</span></a>
+    </div>
+  </section>
+
+  <section class="sec" id="course" aria-labelledby="course-h">
+    <div class="sec-h" style="display:grid;gap:10px;max-width:780px">
+      <span class="eyebrow">2026 / 08 起</span>
+      <h2 id="course-h" style="font-size:clamp(26px,3.4vw,34px);font-weight:900">這段時間，我在做什麼</h2>
+      <p style="font-size:16.5px;color:var(--ink-2)">離開上一份工作後，我參加中興大學「服務業品牌營運與智慧行銷 AI 人才培訓班」。課程涵蓋產品與服務設計、問題解決企劃、提案與落地執行；結業專題由企業出題，我在組內擔任統籌。</p>
+    </div>
+    <div class="course">
+      <a class="vid" href="https://claude.ai/artifact/9ewxkRoUR4stpGfq8332C3">
+        <img src="img/course-cover.jpg" alt="專題成果影片封面：AI 講者 DR. KITTY 介紹展中活動與商用試用包" width="1280" height="720">
+        <span class="play" aria-hidden="true"></span>
+        <span class="vid-b"><span class="k">專題成果影片｜約 3 分鐘｜AI 講者 DR. KITTY</span><b>正昇食品 2027 台北國際食品展｜釀味研究所</b><small>點擊播放：由我設計的 AI 角色擔任講者</small></span>
+      </a>
+      <div class="cside">
+        <div class="mine">
+          <small>我的角色</small>
+          <b>專題統籌・提報主講</b>
+          <p>專題：AI 新品需求預測與商品提案導入（企業出題：正昇食品）｜第七組，4 人｜2026/09/12–11/11</p>
+        </div>
+        <div class="lanes" style="grid-template-columns:1fr">
+          <div class="p"><b>交付成果</b><ul><li>2027 台北國際食品展 B2B 展場整合行銷企劃書，逾 90 頁，迭代至 V3.7</li><li>動態提報簡報、中英雙語活動網站、專案成果影片（3 分鐘、15 分鐘）</li><li>擔任 11/06 課堂提報與 11/10 專題發表主講</li></ul></div>
+        </div>
+        <div class="links"><a class="btn" href="https://claude.ai/artifact/XNKEZMA4UpFVHkK8yWPV3R">看提報簡報（前因後果版）</a><a class="btn ghost" href="https://claude.ai/artifact/SWh5HnCCuB3DzgPkPTJ3Xe">開啟活動網站</a></div>
+      </div>
+    </div>
+    <div class="grp">
+      <div class="grp-h"><h3>我在專題做了什麼</h3></div>
+      <div class="dids">
+        <div class="did"><span class="tagl p" style="justify-self:start">專案管理</span><b>統籌整合四方需求</b><p>整合組員想法、講師規格、AI 規劃方案，以及出題企業的痛點與限制；統籌後製作企劃書、提報簡報，以及 3 分鐘與 15 分鐘的專案成果影片。</p></div>
+        <div class="did"><span class="tagl p" style="justify-self:start">專案管理</span><b>分工與提報</b><p>拆解並分配組員工作；製作動態提報簡報與中英雙語活動網站，擔任課堂提報與專題發表主講。</p></div>
+        <div class="did"><span class="tagl s" style="justify-self:start">需求分析</span><b>市調與方案評選</b><p>引用 21 項公開資料與食品展五展數據，建立 3 種 B2B 買家 Persona 與 173 家去重邀約名單；提出 3 個方案，以 10 項標準評選。</p></div>
+        <div class="did"><span class="tagl a" style="justify-self:start">AI 運用</span><b>跨能力產出</b><p>運用 ChatGPT、Claude、Gemini、Google Flow 與語音生成工具，完成市調分析、活動規劃、宣傳品與影片、互動網站及展場小遊戲。</p></div>
+      </div>
+    </div>
+    <div class="cert"><b>證照</b><span>Generative AI Foundations（Taiwan）</span><span class="note">Critical Career Skills｜2026/10/30</span></div>
+  </section>
+
+  <!-- ================= CASE 01 ================= -->
+  <section class="sec" id="case1" aria-labelledby="c1-h">
+    <div class="case-h">
+      <div>
+        <span class="id">CASE 01</span>
+        <h2 id="c1-h">機台＋線上 SLOT 開發專案</h2>
+        <p class="sub">安特國際｜專案管理師｜2026/03–2026/08｜企劃・美術・數學・前端・後端・QA</p>
+      </div>
+      <div class="mine">
+        <small>我的角色</small>
+        <b>專案管理師</b>
+        <p>排程、發版與送審由我統籌；機台介接的資料流向與例外規則由我釐清，串接由工程師實作。</p>
+        <a class="btn tool" href="https://rsg-project-plan.lazyer1016.chatgpt.site/">開啟我做的專案管理工具 Demo</a>
+        <span class="tooln">把自己的 Excel 專案計畫做成網頁版：Epic／Task、甘特排程、人力負荷</span>
+      </div>
+    </div>
+
+    <div class="car">
+      <div><span class="k">挑戰</span><p>實體機台和線上 SLOT 兩條產品線同時開發，六個職能交錯交付。機台版本要過多輪測試和政府評鑑才能出貨，可用的實體測試機只有幾台。</p></div>
+      <div><span class="k">行動</span><p>用 WBS 把上、下半年開發項目拆成 Epic／Task 排進甘特圖；把發版固定成有關卡的輪次；主持進度同步例會，把議題追到結論；接手送審後查證要求、重建流程。</p></div>
+      <div class="r"><span class="k">結果</span><p>十一、十三、十六合一三種機台版本均通過評鑑；參與機台 V1–V17 版本進測與複驗。</p></div>
+    </div>
+
+    <nav class="steps-toc" aria-label="案例 01 的四件事">
+      <span>這個案例分四件事看：</span>
+      <a href="#c1-s1"><b>01</b> 進度看得見</a><a href="#c1-s2"><b>02</b> 版本穩定上線</a><a href="#c1-s3"><b>03</b> 機台合法出貨</a><a href="#c1-s4"><b>04</b> 機台接上線遊戲</a>
+    </nav>
+    <div class="steps">
+    <article class="step" id="c1-s1">
+      <div class="step-h"><span class="sn">01</span><h3>讓兩條產品線的進度看得見</h3><span class="tagl p">專案管理</span></div>
+      <p class="how">六個部門同時在做兩條產品線，誰卡住、誰在等誰，一開始只有各自知道。我用三個步驟讓所有人看到同一份進度。</p>
+      <div class="roles3">
+        <div><small>01 拆解</small><b>年度項目拆成 Epic／Task</b><span class="note">上、下半年的開發項目用 WBS 拆到可指派、可追蹤的大小</span></div>
+        <div><small>02 排程</small><b>排進甘特圖</b><span class="note">各部門的交付順序與前後依賴放在同一張圖上</span></div>
+        <div><small>03 追蹤</small><b>13 次進度同步例會</b><span class="note">每個議題記下回報者和結論，追到結案</span></div>
+      </div>
+      <h4 class="eh">進度長這樣：新遊戲 5 款跨部門里程碑（節錄）</h4>
+      <div class="tblw"><table class="tbl" style="min-width:640px">
+        <thead><tr><th scope="col">部門</th><th scope="col">要交付什麼</th><th scope="col">遊戲 A</th><th scope="col">遊戲 B</th><th scope="col">遊戲 C</th><th scope="col">遊戲 D</th><th scope="col">遊戲 E</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">企劃</th><td>遊戲規格、動畫與音樂清單、多語系翻譯</td><td class="ok">完成</td><td class="ok">完成</td><td class="ok">完成</td><td class="ok">完成</td><td class="wipt">5/29</td></tr>
+          <tr><th scope="row">美術</th><td>主題、原畫、動畫、多語系圖</td><td class="ok">完成</td><td class="ok">完成</td><td class="wipt">5/29</td><td class="wipt">6/17</td><td class="wipt">初版</td></tr>
+          <tr><th scope="row">前端</th><td>完整第一版（動畫＋音效＋資料）</td><td class="wipt">6 月底</td><td class="wipt">7 月中</td><td class="wipt">7 月底</td><td class="wipt">7 月中</td><td class="wipt">依美術交檔</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">遊戲名稱以代號表示。企劃、美術做完，前端才能接手；表上一眼就能看出遊戲 E 卡在美術交檔。</p>
+      <details class="more">
+        <summary>展開看：例會怎麼做決定（節錄 3 則）</summary>
+        <div class="wide">
+          <div class="tblw"><table class="tbl">
+            <thead><tr><th scope="col">遇到的狀況</th><th scope="col">決定</th><th scope="col">守住了什麼</th></tr></thead>
+            <tbody>
+              <tr><td>工程師自己測試用的環境隨時被更新，同一個功能今天測過、明天又壞</td><td class="dec">統一改用 QA 專用的測試環境，照原本的送測流程走</td><td>測試結果可信</td></tr>
+              <tr><td>新活動已在公司內部驗證過，但要更新到門市的實體機台</td><td class="dec">先在內部演練一次「退回舊版、再重新部署」，確認出問題時怎麼處理</td><td>門市上線的風險</td></tr>
+              <tr><td>翻新的舊遊戲中大獎時多了金幣掉落動畫，新遊戲沒有，兩邊不一致</td><td class="dec">翻新時先統一不加，之後再另外排入開發</td><td>翻新的範圍與時程</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </details>
+    </article>
+
+    <article class="step" id="c1-s2">
+      <div class="step-h"><span class="sn">02</span><h3>讓每一版穩定上線</h3><span class="tagl p">專案管理</span></div>
+      <p class="how">把發版固定成有關卡的輪次，每一輪都走同樣四步；UAT 通過後再做 Prod、合併與升級測試。參與機台 V1–V17 版本進測與複驗。</p>
+      <div class="gatebox" id="release">
+          <div class="gates">
+            <div class="gate"><span>UAT 每輪</span>
+              <div class="chain"><span class="chip">進測申請<em>PM</em></span><span class="arr">→</span><span class="chip">定版佈署<em>前／後端</em></span><span class="arr">→</span><span class="chip">QA 進測</span><span class="arr">→</span><span class="chip">出測除錯<em>企劃＋前端</em></span></div></div>
+            <div class="gate"><span>上線前</span>
+              <div class="chain"><span class="chip">Prod 進出測</span><span class="arr">→</span><span class="chip">合併測試</span><span class="arr">→</span><span class="chip">升級測試</span><span class="arr">→</span><span class="chip on">通知上線、部署機台</span></div></div>
+          </div>
+          <span class="loopn">↺ 出測有問題就開下一輪 R2、R3…，修正後重新進測</span>
+          <p class="note">升級測試模擬門市機台開機下載更新、空機部署新版本的情境。</p>
+      </div>
+      <details class="more">
+        <summary>展開看：測試機不夠時怎麼排</summary>
+        <div class="wide">
+          <h4>測試機不夠時怎麼排</h4>
+          <p class="note">實體測試機只有幾台，每次進測至少要一台實體機加一台桌機。我用「版本集」安排多個專案共用測試機。</p>
+          <div class="rules">
+            <div class="rule"><b>多個專案同時進測</b><span>三款遊戲同時要進測、實體機只剩兩台：指定同一個版本集，把三款部署到同一台機器，QA 一次測完。</span></div>
+            <div class="rule"><b>新功能插隊</b><span>機器被 A、B 遊戲的 R1 占用：等 R1 出測後，把 A、B 的 R2 和新功能一起更新到同一個版本集。</span></div>
+            <div class="rule"><b>基底版號由 PM 決定</b><span>第一次進測，基底用門市線上穩定運行一週以上的版本；R2 之後沿用同一版本集；UAT 通過後另開新版本集做 Prod 測試。</span></div>
+          </div>
+        </div>
+      </details>
+    </article>
+
+    <article class="step" id="c1-s3">
+      <div class="step-h"><span class="sn">03</span><h3>讓機台合法出貨</h3><span class="tagl p">專案管理</span></div>
+      <p class="how">接手時沒有交接資料，我逐項向主管機關查證要求，畫成四個階段的泳道流程，含補件與未通過重送的分支。</p>
+      <div id="review">
+          <div class="rflow"><svg viewBox="0 0 1200 440" role="img" aria-label="電子遊戲機評鑑送審與貼證流程：準備、申請、評鑑、貼證四階段，含補件與未通過重送分支"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" class="ahd"/></marker></defs><g class="lane l1"><rect x="0" y="0" width="230" height="440"/><rect class="hd" x="0" y="0" width="230" height="30"/><text x="115.0" y="20" text-anchor="middle">準備階段</text></g><g class="lane l2"><rect x="230" y="0" width="250" height="440"/><rect class="hd" x="230" y="0" width="250" height="30"/><text x="355.0" y="20" text-anchor="middle">申請階段</text></g><g class="lane l3"><rect x="480" y="0" width="180" height="440"/><rect class="hd" x="480" y="0" width="180" height="30"/><text x="570.0" y="20" text-anchor="middle">評鑑階段</text></g><g class="lane l4"><rect x="660" y="0" width="540" height="440"/><rect class="hd" x="660" y="0" width="540" height="30"/><text x="930.0" y="20" text-anchor="middle">貼證階段</text></g><g class="bx"><rect x="30" y="60" width="170" height="52" rx="8"/><text x="115.0" y="81.5" text-anchor="middle">軟體更新版本</text><text x="115.0" y="99.5" text-anchor="middle">需要重新提交評鑑</text></g><g class="lst"><rect x="30" y="150" width="170" height="150" rx="8"/><text x="44" y="174" class="lh">文件清單</text><text x="44" y="198">遊戲說明書</text><text x="44" y="220">工廠營業登記</text><text x="44" y="242">法律切結書</text><text x="44" y="264">操作影片（字幕＋聲音）</text><text x="44" y="286">評鑑申請（線上填）</text></g><g class="bx"><rect x="270" y="60" width="170" height="52" rx="8"/><text x="355.0" y="81.5" text-anchor="middle">軟體更新</text><text x="355.0" y="99.5" text-anchor="middle">申請評鑑</text></g><g class="bx"><rect x="270" y="140" width="170" height="40" rx="8"/><text x="355.0" y="164.5" text-anchor="middle">主管機關網站登入</text></g><g class="bx"><rect x="270" y="206" width="170" height="40" rx="8"/><text x="355.0" y="230.5" text-anchor="middle">上傳相關文件</text></g><g class="dm"><path d="M355 266 L417 300 L355 334 L293 300 Z"/><text x="355" y="296.5" text-anchor="middle">是否</text><text x="355" y="312.5" text-anchor="middle">需要補件</text></g><g class="bx"><rect x="270" y="370" width="170" height="52" rx="8"/><text x="355.0" y="391.5" text-anchor="middle">主管機關網站</text><text x="355.0" y="409.5" text-anchor="middle">登入並補件</text></g><g class="bx"><rect x="490" y="60" width="160" height="52" rx="8"/><text x="570.0" y="90.5" text-anchor="middle">進行評鑑</text></g><g class="dm"><path d="M570 156 L632 190 L570 224 L508 190 Z"/><text x="570" y="186.5" text-anchor="middle">評鑑</text><text x="570" y="202.5" text-anchor="middle">是否通過</text></g><g class="bx"><rect x="490" y="280" width="160" height="44" rx="8"/><text x="570.0" y="306.5" text-anchor="middle">收到公文</text></g><g class="bx"><rect x="680" y="280" width="150" height="52" rx="8"/><text x="755.0" y="301.5" text-anchor="middle">申請</text><text x="755.0" y="319.5" text-anchor="middle">內銷報驗</text></g><g class="bx"><rect x="860" y="280" width="150" height="52" rx="8"/><text x="935.0" y="301.5" text-anchor="middle">至主管機關</text><text x="935.0" y="319.5" text-anchor="middle">繳費購買小黃標</text></g><g class="bx sm"><rect x="860" y="70" width="170" height="96" rx="8"/><text x="945.0" y="95.5" text-anchor="middle">軟體貼證</text><text x="945.0" y="113.5" text-anchor="middle">線上申請軟體貼證</text><text x="945.0" y="131.5" text-anchor="middle">現場取得貼紙與</text><text x="945.0" y="149.5" text-anchor="middle">主機板查驗申請表</text></g><g class="bx sm"><rect x="860" y="360" width="170" height="72" rx="8"/><text x="945.0" y="382.5" text-anchor="middle">硬體貼證</text><text x="945.0" y="400.5" text-anchor="middle">檢驗人員來電約時間</text><text x="945.0" y="418.5" text-anchor="middle">繳費並領取小黃標</text></g><g class="bx sm"><rect x="1050" y="150" width="136" height="150" rx="8"/><text x="1118.0" y="184.5" text-anchor="middle">機台完整體</text><text x="1118.0" y="202.5" text-anchor="middle">放兩份文件：</text><text x="1118.0" y="220.5" text-anchor="middle">主機板查驗申請表</text><text x="1118.0" y="238.5" text-anchor="middle">國內產製合格證書</text><text x="1118.0" y="256.5" text-anchor="middle">貼兩種貼紙：</text><text x="1118.0" y="274.5" text-anchor="middle">小黃標・軟體貼紙</text></g><g class="bx end"><rect x="1050" y="360" width="136" height="44" rx="8"/><text x="1118.0" y="386.5" text-anchor="middle">完成，安排出貨</text></g><path class="ln" d="M200 86 L268 86" marker-end="url(#ah)"/><path class="ln" d="M355 112 L355 138" marker-end="url(#ah)"/><path class="ln" d="M355 180 L355 204" marker-end="url(#ah)"/><path class="ln" d="M355 246 L355 264" marker-end="url(#ah)"/><path class="ln" d="M355 334 L355 368" marker-end="url(#ah)"/><text class="yn" x="362" y="356">Y</text><path class="ln" d="M270 396 L250 396 L250 300 L291 300" marker-end="url(#ah)"/><path class="ln" d="M417 300 L460 300 L460 86 L488 86" marker-end="url(#ah)"/><text class="yn" x="424" y="292">N</text><path class="ln" d="M570 112 L570 154" marker-end="url(#ah)"/><path class="ln" d="M570 224 L570 278" marker-end="url(#ah)"/><text class="yn" x="578" y="256">Y</text><path class="ln" d="M508 190 L470 190 L470 40 L115 40 L115 58" marker-end="url(#ah)"/><text class="yn" x="486" y="182">N</text><path class="ln" d="M650 302 L678 306" marker-end="url(#ah)"/><path class="ln" d="M830 306 L858 306" marker-end="url(#ah)"/><path class="ln" d="M935 280 L935 168" marker-end="url(#ah)"/><path class="ln" d="M935 332 L935 358" marker-end="url(#ah)"/><path class="ln" d="M1030 118 L1118 118 L1118 148" marker-end="url(#ah)"/><path class="ln" d="M1030 396 L1040 396 L1040 330 L1100 330 L1100 302" marker-end="url(#ah)"/><path class="ln" d="M1118 300 L1118 358" marker-end="url(#ah)"/></svg></div>
+          <p class="note">依我用 draw.io 繪製的送審與貼證流程圖重繪，已去除聯絡窗口與電話。</p>
+      </div>
+      <div class="stamp"><span>十一合一 通過</span><span>十三合一 通過</span><span>十六合一 通過</span></div>
+    </article>
+
+    <article class="step" id="c1-s4">
+      <div class="step-h"><span class="sn">04</span><h3>讓機台接上外部線上遊戲</h3><span class="tagl s">系統分析</span></div>
+      <p class="how">實體機台要能玩外部平台的線上遊戲。我釐清機台、雲端錢包、外部平台三方的資料流向與 5 個團隊的分工，召集會議逐條確認 6 條例外規則；串接由工程師實作。</p>
+      <div class="miniflow" role="img" aria-label="機台與雲端錢包互相轉入轉回餘額，外部遊戲平台對雲端錢包下注與派彩">
+        <div class="mf-n">機台</div>
+        <div class="mf-a"><span>進入遊戲：餘額轉入 →</span><span>← 離開遊戲：餘額轉回</span></div>
+        <div class="mf-n">雲端錢包</div>
+        <div class="mf-a"><span>← 下注扣款・派彩</span></div>
+        <div class="mf-n">外部遊戲平台</div>
+      </div>
+      <div class="rules">
+        <div class="rule"><b>延遲派彩</b><span>玩家下注後、開獎前就離開去玩 Slot；開獎贏分時，等 Slot 轉完才跳補分通知，由玩家點選加回額度。</span></div>
+        <div class="rule"><b>斷電重開</b><span>開機時檢查前一刻是否在網路遊戲中；雲端錢包若還有錢，跳通知，玩家確認後拿回機台。</span></div>
+        <div class="rule"><b>網路遊戲進行中</b><span>不能開分、洗分、入鈔；要洗分必須先把雲端錢包的錢拉回機台。</span></div>
+        <div class="rule"><b>稽查</b><span>網路遊戲需要能快速關閉。</span></div>
+        <div class="rule"><b>載入時斷線</b><span>依錯誤碼顯示對應訊息。</span></div>
+        <div class="rule"><b>後台報表</b><span>贏輸報表只放彙總資料，從外部平台的 API 拉取，依遊戲分開顯示。</span></div>
+      </div>
+      <details class="more">
+        <summary>展開看完整規格：介接循序圖與介接規格表</summary>
+        <div class="wide">
+          <h4>資料怎麼流動</h4>
+          <div class="seq"><svg viewBox="0 0 780 728" role="img" aria-label="機台與雲端錢包、外部遊戲平台的介接循序圖：進入遊戲、遊戲中、離開遊戲與補分四段流程"><line class="ll" x1="70" y1="38" x2="70" y2="728"/><line class="ll" x1="215" y1="38" x2="215" y2="728"/><line class="ll" x1="375" y1="38" x2="375" y2="728"/><line class="ll" x1="535" y1="38" x2="535" y2="728"/><line class="ll" x1="690" y1="38" x2="690" y2="728"/><g class="hd"><rect x="8" y="8" width="124" height="30" rx="6"/><text x="70" y="28" text-anchor="middle">玩家</text></g><g class="hd"><rect x="153" y="8" width="124" height="30" rx="6"/><text x="215" y="28" text-anchor="middle">機台畫面</text></g><g class="hd"><rect x="313" y="8" width="124" height="30" rx="6"/><text x="375" y="28" text-anchor="middle">機台內部 API</text></g><g class="hd"><rect x="473" y="8" width="124" height="30" rx="6"/><text x="535" y="28" text-anchor="middle">雲端錢包</text></g><g class="hd"><rect x="628" y="8" width="124" height="30" rx="6"/><text x="690" y="28" text-anchor="middle">外部遊戲平台</text></g><g class="ph2"><rect x="8" y="59" width="764" height="22" rx="4"/><text x="16" y="74">進入遊戲：餘額從機台轉入雲端錢包</text></g><g class="m"><line x1="70" y1="100" x2="206" y2="100"/><path class="ah" d="M213 100 L204 95 L204 105 Z"/><text x="142.5" y="94" text-anchor="middle">點「進入遊戲」</text></g><g class="m"><line x1="215" y1="130" x2="366" y2="130"/><path class="ah" d="M373 130 L364 125 L364 135 Z"/><text x="295.0" y="124" text-anchor="middle">遊戲代碼</text></g><g class="m"><line x1="375" y1="160" x2="526" y2="160"/><path class="ah" d="M533 160 L524 155 L524 165 Z"/><text x="455.0" y="154" text-anchor="middle">遊戲代碼＋機台餘額</text></g><g class="m r"><line x1="535" y1="190" x2="384" y2="190"/><path class="ah" d="M377 190 L386 185 L386 195 Z"/><text x="455.0" y="184" text-anchor="middle">遊戲網址</text></g><g class="m r"><line x1="375" y1="220" x2="224" y2="220"/><path class="ah" d="M217 220 L226 215 L226 225 Z"/><text x="295.0" y="214" text-anchor="middle">開啟遊戲畫面</text></g><g class="ph2"><rect x="8" y="245" width="764" height="22" rx="4"/><text x="16" y="260">遊戲中：外部平台以單一錢包下注、派彩</text></g><g class="m"><line x1="690" y1="286" x2="544" y2="286"/><path class="ah" d="M537 286 L546 281 L546 291 Z"/><text x="612.5" y="280" text-anchor="middle">下注扣款／派彩</text></g><g class="ph2"><rect x="8" y="311" width="764" height="22" rx="4"/><text x="16" y="326">離開遊戲：餘額從雲端錢包轉回機台</text></g><g class="m"><line x1="70" y1="352" x2="206" y2="352"/><path class="ah" d="M213 352 L204 347 L204 357 Z"/><text x="142.5" y="346" text-anchor="middle">點「離開遊戲」</text></g><g class="m"><line x1="215" y1="382" x2="366" y2="382"/><path class="ah" d="M373 382 L364 377 L364 387 Z"/><text x="295.0" y="376" text-anchor="middle">離開</text></g><g class="m"><line x1="375" y1="412" x2="526" y2="412"/><path class="ah" d="M533 412 L524 407 L524 417 Z"/><text x="455.0" y="406" text-anchor="middle">取回餘額</text></g><g class="m r"><line x1="535" y1="442" x2="384" y2="442"/><path class="ah" d="M377 442 L386 437 L386 447 Z"/><text x="455.0" y="436" text-anchor="middle">餘額</text></g><g class="m r"><line x1="375" y1="472" x2="224" y2="472"/><path class="ah" d="M217 472 L226 467 L226 477 Z"/><text x="295.0" y="466" text-anchor="middle">額度刷新</text></g><g class="ph2"><rect x="8" y="497" width="764" height="22" rx="4"/><text x="16" y="512">補分：處理離開後才開獎的延遲派彩</text></g><g class="m"><line x1="375" y1="538" x2="526" y2="538"/><path class="ah" d="M533 538 L524 533 L524 543 Z"/><text x="455.0" y="532" text-anchor="middle">排程檢查有無派彩</text></g><g class="m r"><line x1="535" y1="568" x2="384" y2="568"/><path class="ah" d="M377 568 L386 563 L386 573 Z"/><text x="455.0" y="562" text-anchor="middle">有派彩 → 移到暫存錢包</text></g><g class="m r"><line x1="375" y1="598" x2="224" y2="598"/><path class="ah" d="M217 598 L226 593 L226 603 Z"/><text x="295.0" y="592" text-anchor="middle">跳出補分通知</text></g><g class="m"><line x1="70" y1="628" x2="206" y2="628"/><path class="ah" d="M213 628 L204 623 L204 633 Z"/><text x="142.5" y="622" text-anchor="middle">點「補分」</text></g><g class="m"><line x1="215" y1="658" x2="366" y2="658"/><path class="ah" d="M373 658 L364 653 L364 663 Z"/><text x="295.0" y="652" text-anchor="middle">補分</text></g><g class="m r"><line x1="375" y1="688" x2="224" y2="688"/><path class="ah" d="M217 688 L226 683 L226 693 Z"/><text x="295.0" y="682" text-anchor="middle">暫存金額加回機台額度</text></g></svg></div>
+          <p class="note">依團隊介接設計文件重繪，已去除廠商與內部系統名稱。實線為呼叫，虛線為回應。</p>
+        </div>
+        <div class="wide">
+          <h4>介接規格表</h4>
+          <div class="tblw"><table class="tbl">
+            <thead><tr><th scope="col">介接項目</th><th scope="col">呼叫方 → 被呼叫方</th><th scope="col">傳遞的資料</th><th scope="col">時機</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">進入遊戲</th><td>機台 → 雲端錢包</td><td>遊戲代碼、機台餘額；回傳遊戲網址</td><td>玩家點「進入遊戲」</td></tr>
+              <tr><th scope="row">下注與派彩</th><td>外部遊戲平台 → 雲端錢包</td><td>下注扣款、派彩金額（單一錢包）</td><td>遊戲進行中</td></tr>
+              <tr><th scope="row">離開遊戲</th><td>機台 → 雲端錢包</td><td>取回餘額；回傳最新餘額</td><td>玩家點「離開遊戲」</td></tr>
+              <tr><th scope="row">回報補分</th><td>機台 → 雲端錢包</td><td>查詢延遲派彩；有的話移到暫存錢包</td><td>排程定時檢查</td></tr>
+              <tr><th scope="row">補分</th><td>機台內部</td><td>暫存金額加回機台額度</td><td>玩家點「補分」</td></tr>
+              <tr><th scope="row">遊戲開關</th><td>機台內部 API → 機台平台</td><td>網路遊戲是否開啟</td><td>進入前判斷、稽查時快速關閉</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </details>
+    </article>
+    </div>
+  </section>
+
+  <section class="sec" id="case2" aria-labelledby="case2-h">
+    <div class="case-h">
+      <div>
+        <span class="id">CASE 02</span>
+        <h2 id="case2-h">營運後台：0→1 規格與跨國分期交付</h2>
+        <p class="sub">未來軟體開發｜系統企劃／專案管理｜轉調日本分公司｜日本・馬爾他・台灣三地團隊</p>
+      </div>
+      <div class="mine">
+        <small>我的角色</small>
+        <b>系統企劃／專案管理</b>
+        <p>功能架構由主管口述、我整理；各頁規格由我撰寫；分期範疇、時程與三地進測由我追蹤。</p>
+        <a class="btn" href="https://drive.google.com/drive/folders/1MjLGHZaVC6dcilwjchDh2x1jsvvbufGU">看原始規格（資料夾）</a>
+
+      </div>
+    </div>
+    <div class="car">
+      <div><span class="k">挑戰</span><p>從 0 到 1 開發日本營運後台，沒有舊系統可參考；代理與玩家之間的點數流向複雜，開發、QA 分散在三個地區。</p></div>
+      <div><span class="k">行動</span><p>把主管口述的業務需求整理成功能架構，再寫成各頁規格；把後台拆成多期交付，非核心功能延後；用工序表與週會追蹤三地進測。</p></div>
+      <div class="r"><span class="k">結果</span><p>規格成為開發與驗收依據；各期需求經需求評審後交付研發，1.3–1.6 期合併為一版送測上線；離職前把進測流程整理成 SOP 完成交接。</p></div>
+    </div>
+    <nav class="steps-toc" aria-label="案例 02 的重點"><span>這個案例分 4 件事看：</span><a href="#case2-s1"><b>01</b> 功能架構</a><a href="#case2-s2"><b>02</b> 規格與取捨</a><a href="#case2-s3"><b>03</b> 分期交付</a><a href="#case2-s4"><b>04</b> 三地進測</a></nav>
+    <div class="steps">
+    <article class="step" id="case2-s1">
+      <div class="step-h"><span class="sn">01</span><h3>把口述需求整理成功能架構</h3><span class="tagl s">系統分析</span></div>
+      <p class="how">主管口述業務需求，我整理成 5 大模組的功能架構，先看清整個後台，再寫到單一頁面。</p>
+      <div class="fa"><div class="fa-row"><div class="fa-m">會員機制</div><div class="fa-c"><span>註冊・登入（含第三方、OTP）</span><span>找回／修改密碼</span><span>會員中心</span><span>會員管理與狀態</span><span>手動上下分</span><span>OTP・IP 黑白名單</span><span>多語系支援</span></div></div><div class="fa-row"><div class="fa-m">代理機制</div><div class="fa-c"><span class="hl">代理錢包</span><span class="hl">帳戶錢包</span><span>前端遊戲控制</span><span>RTP 設置</span><span>代理狀態</span><span>前端域名控制</span></div></div><div class="fa-row"><div class="fa-m">存／提</div><div class="fa-c"><span>充值頁・提款頁</span><span>會員銀行卡</span><span>渠道管理</span><span>支付管理</span><span>充提帳變</span><span>提款審核</span></div></div><div class="fa-row"><div class="fa-m">拉單系統（報表）</div><div class="fa-c"><span>帳變</span><span>注單明細</span><span class="hl">數據總覽</span><span>財務報表</span><span>系統規格</span></div></div><div class="fa-row"><div class="fa-m">客服與內容管理</div><div class="fa-c"><span>客服系統</span><span>遊戲供應商接入</span><span>市場區隔（IP・幣種限制）</span></div></div></div>
+      <p class="note">原為 XMind，此處只列到第二層；橘框為下一步展示的 3 頁規格。後台共 27 頁。</p>
+    </article>
+
+    <article class="step" id="case2-s2">
+      <div class="step-h"><span class="sn">02</span><h3>寫成各頁規格，規則依商務條件設計</h3><span class="tagl s">系統分析</span></div>
+      <p class="how">整合外部廠商手冊與既有產品，寫出各頁欄位、畫面與操作規則；展示其中 3 頁：代理錢包、帳戶錢包、數據總覽。</p>
+      <div class="dec"><small>規格取捨</small><b>加贈點數由誰出資？</b>
+        <ol><li>固定由公司出資</li><li>固定由代理出資</li><li class="pick">依代理設定出資方（採用）</li></ol>
+        <p>出資方是公司跟每位代理談的商務條件，不同代理可能不一樣，所以規格不寫死，改成依代理設定。</p>
+      </div>
+      <div class="links"><a class="btn ghost" href="https://agent-wallet-portfolio-demo.lazyer1016.chatgpt.site/">代理錢包原型</a><a class="btn ghost" href="https://account-wallet-original-portfolio.lazyer1016.chatgpt.site/">帳戶錢包原型</a><a class="btn ghost" href="https://data-overview-dashboard-xudanhe.lazyer1016.chatgpt.site/">數據總覽原型</a></div>
+      <p class="note">原型僅前端畫面，用來確認規則在畫面上說得通。</p>
+    </article>
+
+    <article class="step" id="case2-s3">
+      <div class="step-h"><span class="sn">03</span><h3>拆成多期交付，首期只做核心功能</h3><span class="tagl p">專案管理</span></div>
+      <p class="how">依優先序把後台拆成三個階段：先上線能營運的核心，再逐期補齊，非必要功能往後排或不做。</p>
+      <div class="phases p3">
+        <div class="ph"><b>首期上線｜1.0–1.2</b>登入、廠商與代理商戶、遊戲清單、第三方遊戲入口</div>
+        <div class="ph"><b>逐期補齊｜1.3–1.7</b>帳號、錢包、注單、報表、權限，以及體驗優化</div>
+        <div class="ph"><b>後續規劃｜2.0–3.0</b>代理制度、佣金、推廣註冊</div>
+      </div>
+      <p class="note">取捨：Banner、搜尋推薦等 3 項非必要功能從首期延後，域名設置不開發。</p>
+    </article>
+
+    <article class="step" id="case2-s4">
+      <div class="step-h"><span class="sn">04</span><h3>協調三地團隊進測，完成交接</h3><span class="tagl p">專案管理</span></div>
+      <p class="how">日本、馬爾他、台灣三地團隊一起開發，我負責讓需求、進度和上線時間對齊。</p>
+      <div class="roles3">
+        <div><small>需求評審</small><b>9 場評審後才交研發</b><span class="note">1.0～2.0 期的需求逐場確認，再進開發</span></div>
+        <div><small>進度追蹤</small><b>工序表＋產品週會</b><span class="note">每個功能逐格更新狀態，週會追三地的進測與修正</span></div>
+        <div><small>上線與交接</small><b>2/26 正式上線</b><span class="note">四期合併成 1.6.0 避開春節上線；離職前把進測流程整理成 SOP 交接</span></div>
+      </div>
+    </article>
+    </div>
+  </section>
+
+  <section class="sec" id="case3" aria-labelledby="case3-h">
+    <div class="case-h">
+      <div>
+        <span class="id">CASE 03</span>
+        <h2 id="case3-h">多語言資源平台：範疇收斂與分階段開發</h2>
+        <p class="sub">Skyline｜產品企劃｜2024/07–2025/10｜原案規格完成並進入開發，後因公司決策中止；系統為近期依原規格重建</p>
+      </div>
+      <div class="mine">
+        <small>我的角色</small>
+        <b>PRD 作者</b>
+        <p>需求規劃與原始規格由我撰寫；AI 改寫規格時，每個規格問題由我決定，並負責最終驗收。</p>
+        <a class="btn" href="https://multilingual-resource-platform-v2.lazyer1016.chatgpt.site/">開啟系統 Demo</a>
+
+      </div>
+    </div>
+    <div class="car">
+      <div><span class="k">挑戰</span><p>企劃新增或修改需求後，美術組長沒有同步到，企劃、美術、研發三方花很多時間溝通與返工。</p></div>
+      <div><span class="k">行動</span><p>盤點企劃 → 美術 → 研發的交接流程，和企劃、美術共同收斂範圍，寫成 PRD 與 Axure 原型；近期再改寫成 SRS，規劃 P0–P5 分階段開發。</p></div>
+      <div class="r"><span class="k">結果</span><p>規格完整到 AI 能直接照著開發：完整版系統 API 70/70、端對端 30/30 測試通過；開發中發現的規格問題全部回寫 SRS。</p></div>
+    </div>
+    <nav class="steps-toc" aria-label="案例 03 的重點"><span>這個案例分 3 件事看：</span><a href="#case3-s1"><b>01</b> 收斂範疇</a><a href="#case3-s2"><b>02</b> PRD → SRS</a><a href="#case3-s3"><b>03</b> 分階段開發</a></nav>
+    <div class="steps">
+    <article class="step" id="case3-s1">
+      <div class="step-h"><span class="sn">01</span><h3>先收斂範疇，再寫規格</h3><span class="tagl s">系統分析</span></div>
+      <p class="how">盤點原本用 Excel 交接的流程，找出需求變更沒同步、修改資訊漏看的問題，經多輪確認後與企劃、美術共同定出範圍。</p>
+      <div class="gatebox">
+        <div class="chain"><span class="chip">企劃 Excel 提需求</span><span class="arr">→</span><span class="chip">美術製作</span><span class="arr">→</span><span class="chip">企劃驗收</span><span class="arr">→</span><span class="chip">研發置換資源</span></div>
+        <p class="note">原本的交接方式：需求一改，下游常沒同步到，造成返工。</p>
+      </div>
+      <div class="caps">
+        <div class="cap"><span class="cn">5</span><b>類角色</b><span>超級管理員、企劃、美術組長、美術、QA</span></div>
+        <div class="cap"><span class="cn">4</span><b>種語言</b><span>多語系資源</span></div>
+        <div class="cap"><span class="cn">2</span><b>個交付平台</b><span>Cocos、H5</span></div>
+      </div>
+      <p class="note">核心功能：任務分配、製作狀態、需求變更標記、驗收、匯出交付。</p>
+    </article>
+
+    <article class="step" id="case3-s2">
+      <div class="step-h"><span class="sn">02</span><h3>從 PRD 到 AI 能照著開發的 SRS</h3><span class="tagl s">系統分析</span></div>
+      <p class="how">原始 PRD 與 Axure 原型由我撰寫；近期交給 AI 改寫成 85 頁 SRS，補上角色權限、資料表、API、錯誤碼、泳道圖、ERD 與需求追溯矩陣，每個規格問題由我決定。</p>
+      <div class="links"><a class="btn ghost" href="https://drive.google.com/file/d/13Cj1jUxcyhE-wstCRn7k5ogj598GHfPS/view">看原始 PRD</a><a class="btn ghost" href="https://drive.google.com/file/d/1pf7vYh--Ub0YVenQMFYzyg22fSGpTIJp/view">看 SRS 正式版</a></div>
+    </article>
+
+    <article class="step" id="case3-s3">
+      <div class="step-h"><span class="sn">03</span><h3>分階段開發，規格問題先改規格再改程式</h3><span class="tagl p">專案管理</span></div>
+      <p class="how">依 SRS 規劃 P0～P5 開發階段，每階段定義範圍與驗收點，逐階段驗證後才進下一階段。</p>
+      <div class="ph6"><span>P0</span><span>P1</span><span>P2</span><span>P3</span><span>P4</span><span>P5</span></div>
+      <div class="roles3">
+        <div class="me"><small>定義與決策</small><b>我</b><span>規格是唯一標準；決定每一個規格問題；最終驗收</span></div>
+        <div><small>規格夥伴</small><b>Claude</b><span>整理與改寫規格；檢查邏輯矛盾；發布前獨立複查</span></div>
+        <div><small>開發執行</small><b>Codex</b><span>只照規格開發前後端與資料庫；撰寫並執行自動測試</span></div>
+      </div>
+      <span class="loopn">↺ 開發中遇到規格沒寫清楚的地方，AI 不猜，記進「規格問題清單」→ 我決定 → 先改規格再改程式</span>
+    </article>
+    </div>
+  </section>
+
+  <section class="sec" id="case4" aria-labelledby="case4-h">
+    <div class="case-h">
+      <div>
+        <span class="id">CASE 04</span>
+        <h2 id="case4-h">輕量 ERP：從兩年的 Excel 規則到系統</h2>
+        <p class="sub">恩威管理顧問｜產品經理｜Excel 工具在兩家門市實際使用兩年以上；ERP 為離職後重建的作品，未在門市試行</p>
+      </div>
+      <div class="mine">
+        <small>我的角色</small>
+        <b>Excel 工具設計者</b>
+        <p>營收登記、月結、排班的 Excel 工具由我設計；以這些規則請 AI 產出規格與系統，由我確認實作結果、設計驗收案例。</p>
+        <a class="btn" href="https://unv-plan-erp-demo.lazyer1016.chatgpt.site/login">開啟 ERP Demo</a>
+
+      </div>
+    </div>
+    <div class="car">
+      <div><span class="k">挑戰</span><p>兩家門市靠 Excel 登記營收：選錯服務人員抽成就算錯、公式一動就壞、月底要花半天對帳；改單或刪單時，庫存常沒跟著改。</p></div>
+      <div><span class="k">行動</span><p>把兩年實際營運的 Excel 規則整理成業務規則、資料表關聯、例外情境與驗收測試案例，再交由 AI 實作成 ERP；新需求走變更流程。</p></div>
+      <div class="r"><span class="k">結果</span><p>ERP 原型完成，每條規則都有對應的測試案例；商品賣出自動扣庫存，改單、刪單時庫存同步重建。</p></div>
+    </div>
+    <nav class="steps-toc" aria-label="案例 04 的重點"><span>這個案例分 3 件事看：</span><a href="#case4-s1"><b>01</b> 產品展示</a><a href="#case4-s2"><b>02</b> 規則與驗收</a><a href="#case4-s3"><b>03</b> 變更管理</a></nav>
+    <div class="steps">
+    <article class="step" id="case4-s1">
+      <div class="step-h"><span class="sn">01</span><h3>約 1 分鐘看完整流程</h3><span class="tagl a">產品展示</span></div>
+      <p class="how">登記一筆營收 → 自動扣庫存 → 改單同步重建 → 月報即時計算，畫面皆為實際操作 Demo 系統。</p>
+      <a class="vid erp" href="https://claude.ai/artifact/UgMDJDJhoridrX4Cu24dST#play"><img src="img/erp-cover.jpg" alt="門市管理 ERP 產品展示影片封面" width="1280" height="630"></a>
+    </article>
+
+    <article class="step" id="case4-s2">
+      <div class="step-h"><span class="sn">02</span><h3>把營運規則寫成可驗收的規格</h3><span class="tagl s">系統分析</span></div>
+      <p class="how">以我的 Excel 規則為需求來源，請 AI 產出系統分析文件：8 條業務規則、5 張資料表關聯、12 種例外情境，對應 11 個驗收測試案例。</p>
+      <div class="tblw"><table class="tbl">
+        <thead><tr><th scope="col">環節</th><th scope="col">改善前：Excel</th><th scope="col">改善後：ERP</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">登記銷售</th><td>手動選服務人員，選錯抽成就算錯</td><td class="dec">依規則帶出可選人員與抽成</td></tr>
+          <tr><th scope="row">改單、刪單</th><td>要另外手動改庫存，常漏改</td><td class="dec">庫存自動同步重建</td></tr>
+          <tr><th scope="row">計算公式</th><td>有人動到公式就壞</td><td class="dec">規則寫在系統裡，使用者改不到</td></tr>
+          <tr><th scope="row">月結</th><td>店長花半天對帳</td><td class="dec">月報自動產出</td></tr>
+        </tbody>
+      </table></div>
+      <div class="links"><a class="btn ghost" href="https://drive.google.com/drive/folders/1L-TLNO0AfGW4uEdd3fh5Z0kVTpdPXE6B">看 Excel 營運工具</a><a class="btn ghost" href="https://drive.google.com/file/d/1jxeZFmg3LPu0YT0PoDfxF84w5GoijoRw/view">看系統分析文件</a></div>
+    </article>
+
+    <article class="step" id="case4-s3">
+      <div class="step-h"><span class="sn">03</span><h3>新需求走變更流程</h3><span class="tagl p">專案管理</span></div>
+      <p class="how">新需求不直接改程式：先寫成變更需求，分析影響範圍，開發後再測試與複驗。</p>
+      <div class="gatebox">
+        <div class="chain"><span class="chip">提出變更：庫存不足提醒</span><span class="arr">→</span><span class="chip">影響分析：頁面、資料、報表</span><span class="arr">→</span><span class="chip">開發</span><span class="arr">→</span><span class="chip on">測試與複驗</span></div>
+        <p class="note">範例：CR-001 庫存不足提醒</p>
+      </div>
+    </article>
+    </div>
+  </section>
+
+
+
+  <footer>
+    <span>許丹合｜軟體專案管理／系統分析</span>
+    <span>Demo 網站皆使用示範資料｜V2.0・2026.11.10</span>
+  </footer>
+</main>
+
+<script>
+(function(){
+  var stage=document.getElementById('stage'),svg=document.getElementById('wires'),fig=document.getElementById('figure');
+  var cards=[].slice.call(document.querySelectorAll('.tp')),panels=[].slice.call(document.querySelectorAll('.tpp'));
+  var first=true;
+  function draw(){
+    if(getComputedStyle(svg).display==='none')return;
+    var sr=stage.getBoundingClientRect();svg.setAttribute('viewBox','0 0 '+sr.width+' '+sr.height);
+    var out='';
+    cards.forEach(function(c){
+      var k=c.dataset.k,d=fig.querySelector('.dot[data-k="'+k+'"]');if(!d)return;
+      var dr=d.getBoundingClientRect(),cr=c.getBoundingClientRect();
+      var x1=dr.left+dr.width/2-sr.left,y1=dr.top+dr.height/2-sr.top;
+      var left=c.parentNode.classList.contains('left');
+      var x2=(left?cr.right:cr.left)-sr.left,y2=cr.top+cr.height/2-sr.top;
+      var mx=left?x2+24:x2-24;
+      var lane=(c.className.match(/\b(sa|pm|ai|base)\b/)||[])[1]||'';
+      var on=c.getAttribute('aria-pressed')==='true'?' on':'';
+      out+='<path class="'+lane+on+(first?' draw':'')+'" data-k="'+k+'" d="M'+x1+' '+y1+' L'+mx+' '+y2+' L'+x2+' '+y2+'"/>';
+    });
+    svg.innerHTML=out;first=false;
+  }
+  function pick(k){
+    cards.forEach(function(c){c.setAttribute('aria-pressed',c.dataset.k===k?'true':'false')});
+    panels.forEach(function(p){p.hidden=p.dataset.k!==k});
+    [].forEach.call(svg.querySelectorAll('path'),function(p){p.classList.toggle('on',p.dataset.k===k)});
+  }
+  cards.forEach(function(c){c.addEventListener('click',function(){pick(c.dataset.k);if(window.innerWidth<820){document.getElementById('tpanel').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})}})});
+  [].forEach.call(fig.querySelectorAll('.dot'),function(d){d.addEventListener('click',function(){pick(d.dataset.k)})});
+  var img=fig.querySelector('img');
+  if(img.complete)draw();else img.addEventListener('load',draw);
+  window.addEventListener('resize',draw);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(draw);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<article class="step" id="c1-tm">
+      <div class="step-h"><span class="sn">00</span><h3>測試機預約表：多款遊戲分批進測也不撞期</h3><span class="tagl p">專案管理</span></div>
+      <p class="how">遊戲可以先在網頁環境測，但最終定案一定要上實體機台。同時上架多款時常會分批：例如 5 款裡 2 款先進 UAT、還在跑 R1–R3，後面 3 款的 R1 又要進來，測試機時間就會撞。我在 Notion 做了測試機預約表，讓大家看得到哪一台用到什麼時候。</p>
+      <div class="tm-why">
+        <div><b>撞期的情況</b><p>第一批 R2、R3 還沒測完，第二批 R1 已經排進來；同一台機器只能測一個版本。</p></div>
+        <div><b>預約表怎麼解</b><p>每台測試機綁定測試項目、輪次與時段；有插單要優先測，就在表上把後面的時程往後調。</p></div>
+      </div>
+      <figure class="tm">
+        <div class="tm-bar"><b>測試機預約</b><span class="tm-tabs"><span class="on">時間軸</span><span>表格</span><span>依主機分組</span></span><small>示意畫面・已去識別化</small></div>
+        <div class="tm-grid" role="img" aria-label="測試機時間軸：測試機 A 在第一批遊戲 A 的 R2 之後插入正式環境升級測試，遊戲 A 的 R3 順延兩天；測試機 B 跑遊戲 B 的 R2 和 R3；三台桌機接第二批遊戲 C、D、E 的 R1">
+          <div class="tm-h"><span></span><i>6/22</i><i>23</i><i>24</i><i>25</i><i>26</i><i>29</i><i>30</i><i>7/1</i><i>2</i><i>3</i></div>
+          <div class="tm-r"><span class="tm-m"><b>測試機 A</b><small>3F｜主機 A＋紙鈔機 1</small></span>
+            <em class="d" style="grid-column:2/5">遊戲 A｜UAT R2</em><em class="hot" style="grid-column:5/7">插單｜正式環境升級測試</em><em class="w" style="grid-column:7/9">遊戲 A｜UAT R3（順延）</em></div>
+          <div class="tm-r"><span class="tm-m"><b>測試機 B</b><small>3F｜主機 B＋紙鈔機 2</small></span>
+            <em class="d" style="grid-column:2/6">遊戲 B｜UAT R2</em><em class="p" style="grid-column:6/9">遊戲 B｜UAT R3</em></div>
+          <div class="tm-r"><span class="tm-m"><b>桌機 01</b><small>7F</small></span>
+            <em class="w2" style="grid-column:4/9">第二批・遊戲 C｜UAT R1</em></div>
+          <div class="tm-r"><span class="tm-m"><b>桌機 02</b><small>7F</small></span>
+            <em class="w2" style="grid-column:4/9">第二批・遊戲 D｜UAT R1</em></div>
+          <div class="tm-r"><span class="tm-m"><b>桌機 03</b><small>7F</small></span>
+            <em class="w2" style="grid-column:7/12">第二批・遊戲 E｜UAT R1</em></div>
+        </div>
+        <div class="tm-key"><span class="d">已完成</span><span class="p">測試中</span><span class="w">待佈署</span><span class="hot">插單優先</span><span class="w2">第二批進測</span></div>
+      </figure>
+      <ul class="tm-out">
+        <li><b>大家都看得到</b>哪一台測試機被誰用到哪天，不用再口頭確認。</li>
+        <li><b>插單有依據</b>：要優先測的項目放進來，後面哪些順延、延多久，表上一目了然。</li>
+        <li><b>工程師與 QA 對齊</b>：什麼時候測什麼、哪一輪要先測完，排程才能往下走。</li>
+        <li><b>撞期時拿這張表討論</b>，直接在表上調時段，而不是各說各話。</li>
+      </ul>
+      <p class="note">原表在 Notion 建置（表格、依主機分組、日曆三種檢視），並附測試機使用說明：哪些機殼可換主機、哪台掛線上環境、只在升級測試時使用。此處以示意畫面呈現，遊戲與硬體名稱已去識別化。</p>
+    </article>

@@ -1,0 +1,594 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>許丹合｜系統分析／系統企劃作品集</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="許丹合｜系統分析／系統企劃 作品集：從業務需求寫到驗收規格，再用 AI 把規格變成可操作的系統。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<link rel="stylesheet" href="css/pf-tokens.css">
+<style>
+/* Layout: a spec-document portfolio — each case reads left→right as 原本 → AI 賦能 → Demo, set in the navy/amber ink of the author's own spec books */
+:root{--f-body:var(--font-body);--f-mono:var(--font-mono);--shadow:var(--shadow-card)}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.7;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--sheet)}
+a{color:var(--blue)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--amber);outline-offset:2px;border-radius:6px}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.3}
+p{margin:0}
+.wrap{max-width:1160px;margin:0 auto}
+.mono{font-family:var(--f-mono);letter-spacing:.06em}
+.eyebrow{font-family:var(--f-mono);font-size:12.5px;letter-spacing:.14em;color:var(--blue);text-transform:uppercase}
+
+/* top bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--sheet);border-bottom:1px solid var(--rule);
+  margin-left:calc(-1*max(16px,env(safe-area-inset-left,0px)));margin-right:calc(-1*max(16px,env(safe-area-inset-right,0px)));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:8px 20px;flex-wrap:wrap;padding-block:8px}
+.brand{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--ink);min-height:40px;align-items:center}
+.brand b{font-size:16px;letter-spacing:.04em}
+.brand span{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-3);letter-spacing:.12em}
+.nav{display:flex;flex-wrap:wrap;gap:2px}
+.nav a{color:var(--ink-2);text-decoration:none;font-size:14.5px;padding:8px 12px;border-radius:8px}
+.nav a:hover{background:var(--blue-soft);color:var(--navy)}
+
+/* hero */
+.hero{padding-block:64px 48px;display:grid;gap:36px}
+.who{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 22px}
+.who h1{font-size:clamp(44px,7vw,64px);font-weight:900;letter-spacing:.08em;color:var(--ink)}
+.who .jt{font-size:clamp(20px,2.6vw,26px);font-weight:700;color:var(--ink-2)}
+.who .jt i{font-style:normal;color:var(--ink-3);font-weight:400}
+.thesis{font-size:clamp(22px,3.2vw,32px);font-weight:700;line-height:1.5;max-width:28em;color:var(--navy)}
+.thesis em{font-style:normal;color:var(--amber)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.tags small{font-size:13px;color:var(--ink-3);margin-right:4px}
+.tag{font-size:14px;padding:5px 12px;border-radius:999px;background:var(--sheet);border:1px solid var(--rule);color:var(--ink-2)}
+.meta{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:14px;color:var(--ink-3)}
+
+.chain{background:var(--sheet);border:1px solid var(--rule);border-radius:14px;padding:24px;display:grid;gap:16px;box-shadow:var(--shadow)}
+.chain-h{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px 16px;align-items:baseline}
+.chain-h b{font-size:15px}
+.chain-h span{font-size:13px;color:var(--ink-3)}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;border:1px solid var(--rule);border-radius:10px;overflow:hidden}
+.steps li{padding:14px 16px;display:grid;gap:2px;border-right:1px solid var(--rule);background:var(--paper)}
+.steps li:last-child{border-right:0}
+.steps .n{font-family:var(--f-mono);font-size:12px;color:var(--blue)}
+.steps .t{font-weight:700;font-size:16px}
+.steps .d{font-size:13px;color:var(--ink-3);line-height:1.5}
+.ai{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;border:1px dashed var(--blue);border-radius:10px;padding:12px 16px}
+.ai b{font-size:13px;color:var(--blue);letter-spacing:.06em}
+.ai span{font-size:15px}
+.ai small{font-size:13.5px;color:var(--ink-3)}
+@media (max-width:720px){.steps{grid-template-columns:1fr 1fr}.steps li{border-bottom:1px solid var(--rule)}.steps li:nth-child(2n){border-right:0}}
+
+/* section heads */
+section{scroll-margin-top:72px}
+.sec{padding-block:56px;border-top:1px solid var(--rule);display:grid;gap:28px}
+.sec-h{display:grid;gap:10px;max-width:780px}
+.sec-h h2{font-size:clamp(26px,3.4vw,34px);font-weight:900;letter-spacing:.02em}
+.sec-h p{font-size:16.5px;color:var(--ink-2)}
+
+/* workflow */
+.roles{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:stretch}
+.role{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:20px;display:grid;gap:8px;align-content:start}
+.role.me{border-color:var(--amber-line);background:var(--amber-soft)}
+.role .k{font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--ink-3)}
+.role.me .k{color:var(--amber)}
+.role h3{font-size:20px}
+.role ul{margin:0;padding-left:18px;font-size:14.5px;color:var(--ink-2);display:grid;gap:4px;align-content:start}
+.arrow{align-self:center;color:var(--ink-3);font-size:20px}
+.loop{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;background:var(--sheet);border:1px dashed var(--blue);border-radius:12px;padding:14px 18px}
+.loop b{color:var(--blue);font-size:14px}
+.loop span{font-size:15px}
+@media (max-width:820px){.roles{grid-template-columns:1fr}.arrow{transform:rotate(90deg);justify-self:center}}
+
+/* works */
+.works-h{display:flex;flex-wrap:wrap;gap:24px 40px;align-items:flex-end;justify-content:space-between}
+.works-h .sec-h{flex:1 1 480px}
+.stats{flex:1 1 420px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.stat{background:var(--sheet);border:1px solid var(--rule);border-radius:10px;padding:14px 16px;display:grid;gap:2px}
+.stat b{font-size:26px;font-weight:900;font-variant-numeric:tabular-nums;color:var(--navy)}
+.stat span{font-size:12.5px;color:var(--ink-3);line-height:1.5}
+@media (max-width:520px){.stats{grid-template-columns:1fr}}
+
+.case{display:grid;grid-template-columns:270px minmax(0,1fr);gap:18px 22px;padding-top:36px;border-top:1px dashed var(--rule);align-items:start}
+.case .change{grid-column:1/-1}
+.case:first-of-type{border-top:0;padding-top:4px}
+.case-h{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px 32px;align-items:start}
+.case-h .id{font-family:var(--f-mono);font-size:13px;color:var(--ink-3);letter-spacing:.1em}
+.case-h h3{font-size:clamp(24px,3vw,30px);font-weight:900;margin-top:4px}
+.case-h .sub{font-size:14.5px;color:var(--ink-3)}
+.case-h .prob{margin-top:12px;font-size:15px;color:var(--ink-2)}
+.case-h .prob b{display:block;font-size:12.5px;color:var(--ink-3);font-weight:500;margin-bottom:2px}
+.mine{background:var(--amber-soft);border:1px solid var(--amber-line);border-radius:12px;padding:16px 18px;display:grid;gap:6px}
+.mine small{font-size:12px;font-weight:700;color:var(--amber);letter-spacing:.06em}
+.mine b{font-size:19px}
+.mine p{font-size:14.5px;color:var(--ink-2)}
+.mine .sdd{justify-self:start;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.08em;color:var(--blue);border:1px solid var(--blue);border-radius:4px;padding:1px 7px}
+.case .case-h{grid-template-columns:1fr;gap:16px}
+.case .case-h h3{font-size:clamp(24px,2.6vw,28px)}
+.case .case-h .prob2{margin-top:0}
+.case .stages{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:1100px){.case{grid-template-columns:1fr}.case .case-h{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.case .case-h .prob2{grid-column:1/-1}}
+@media (max-width:980px){.case .stages{grid-template-columns:1fr}}
+@media (max-width:820px){.case .case-h{grid-template-columns:1fr}}
+
+.stages{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:980px){.stages{grid-template-columns:1fr}}
+.card{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow);min-width:0}
+.card-top{display:flex;align-items:baseline;gap:10px;padding:12px 18px;border-bottom:1px solid var(--rule)}
+.card-top .no{font-family:var(--f-mono);font-size:12.5px}
+.card-top .st{font-weight:700;font-size:16px}
+.card.o .card-top{border-top:4px solid var(--amber)} .card.o .no,.card.o .st{color:var(--amber)}
+.card.a .card-top{border-top:4px solid var(--blue)} .card.a .no,.card.a .st{color:var(--blue)}
+.card.d .card-top{border-top:4px solid var(--ink)} .card.d .no,.card.d .st{color:var(--ink)}
+.shot{display:block;width:100%;max-width:100%;aspect-ratio:16/10;padding:0;border:0;border-bottom:1px solid var(--rule);background:var(--paper);cursor:pointer;overflow:hidden}
+.shot img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;transition:transform .3s ease}
+.shot:hover img{transform:scale(1.02)}
+@media (prefers-reduced-motion: reduce){.shot img{transition:none}.shot:hover img{transform:none}}
+.card-b{padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex-grow:1}
+.card-b h4{margin:0;font-size:16.5px;line-height:1.45}
+.badge{align-self:flex-start;font-size:12px;font-weight:700;padding:3px 9px;border-radius:4px}
+.badge.mine-b{background:var(--amber-soft);color:var(--amber);border:1px solid var(--amber-line)}
+.badge.ai-b{background:var(--blue-soft);color:var(--blue)}
+.badge.full{background:var(--ink);color:var(--sheet)}
+.badge.front{border:1px solid var(--ink-3);color:var(--ink-2);font-weight:500}
+.card-b ul{margin:0;padding-left:18px;font-size:14.5px;color:var(--ink-2);display:grid;gap:5px;flex-grow:1;align-content:start}
+.ctas{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.btn{display:inline-flex;align-items:center;gap:6px;min-height:42px;padding:0 16px;border-radius:8px;background:var(--navy);color:var(--sheet);text-decoration:none;font-weight:700;font-size:14px}
+.btn:hover{filter:brightness(1.1)}
+.btn.ghost{background:transparent;color:var(--blue);border:1px solid var(--blue)}
+.btn::after{content:"↗";font-weight:500}
+.mini{display:grid;grid-template-columns:112px minmax(0,1fr);gap:12px;align-items:center;padding:8px;border:1px solid var(--rule);border-radius:10px;background:var(--paper);text-decoration:none;color:var(--ink)}
+.mini:hover{border-color:var(--blue)}
+.mini img{width:112px;height:68px;object-fit:cover;border-radius:6px;display:block}
+.mini span{display:grid;gap:2px;min-width:0}
+.mini b{font-size:14px;color:var(--navy)}
+.mini small{font-size:12.5px;color:var(--ink-3)}
+.change{background:var(--blue-soft);border-radius:10px;padding:12px 18px;display:flex;flex-wrap:wrap;gap:6px 22px;align-items:baseline}
+.change b{font-size:13px;color:var(--blue);letter-spacing:.04em}
+.change span{font-size:14.5px}
+
+/* course */
+.course{background:var(--sheet);border:1px solid var(--rule);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);align-items:center}
+.course .shot{aspect-ratio:auto;cursor:pointer;background:var(--paper);padding:16px;border-bottom:0;border-right:1px solid var(--rule);height:100%;display:flex;align-items:center}
+.course .shot img{height:auto;width:100%;object-fit:contain}
+.course-b{padding:20px 22px;display:grid;gap:12px}
+.course-b h3{font-size:20px;font-weight:900}
+.course-b p{color:var(--ink-2);font-size:14.5px}
+.flow{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 16px}
+.flow li{display:grid;grid-template-columns:auto 1fr;gap:0 8px;align-items:baseline}
+.flow .n{font-family:var(--f-mono);font-size:12px;color:var(--blue);grid-row:span 2}
+.flow .t{font-weight:700;font-size:14.5px}
+.flow .d{font-size:13px;color:var(--ink-3);line-height:1.5}
+@media (max-width:820px){.course{grid-template-columns:1fr}.course .shot{border-right:0;border-bottom:1px solid var(--rule)}}
+@media (max-width:460px){.flow{grid-template-columns:1fr}}
+
+/* others */
+.others{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:900px){.others{grid-template-columns:1fr}}
+.oc{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.oc .shot{aspect-ratio:16/9}
+.oc .shot img{object-position:top left}
+.oc-b{padding:18px;display:flex;flex-direction:column;gap:10px;flex-grow:1}
+.oc-b .ty{align-self:flex-start;font-size:12px;color:var(--ink-2);background:var(--paper);border:1px solid var(--rule);padding:2px 8px;border-radius:4px}
+.oc-b h4{margin:0;font-size:17px}
+.oc-b p{font-size:14.5px;color:var(--ink-2);flex-grow:1}
+.oc-b .wip{font-size:13px;color:var(--amber);font-weight:700}
+.oc .ph{aspect-ratio:16/9;display:grid;place-items:center;background:repeating-linear-gradient(135deg,var(--paper) 0 10px,var(--sheet) 10px 20px);border-bottom:1px solid var(--rule);color:var(--ink-3);font-family:var(--f-mono);font-size:12.5px;letter-spacing:.1em}
+
+footer{border-top:1px solid var(--rule);padding-block:28px 40px;font-size:13.5px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:6px 20px;justify-content:space-between}
+
+/* lightbox */
+dialog{border:0;padding:0;background:transparent;max-width:min(1400px,96vw);max-height:92vh}
+dialog::backdrop{background:rgba(10,16,26,.82)}
+dialog img{display:block;max-width:100%;max-height:86vh;border-radius:8px;background:#fff}
+dialog form{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:10px;color:#E7EDF5;font-size:14px}
+dialog button{min-height:40px;padding:0 16px;border-radius:8px;border:1px solid #9DB9DD;background:transparent;color:#E7EDF5;font:inherit;cursor:pointer}
+
+/* ===== V2 additions ===== */
+.demo{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:24px;align-items:center;background:var(--sheet);border:1px solid var(--rule);border-radius:14px;padding:14px;text-decoration:none;color:var(--ink);box-shadow:var(--shadow)}
+.demo:hover{border-color:var(--blue)}
+.demo img{width:100%;height:auto;display:block;border-radius:10px}
+.demo span{display:grid;gap:8px;padding-right:12px}
+.demo .k{font-family:var(--f-mono);font-size:12.5px;letter-spacing:.14em;color:var(--amber)}
+.demo b{font-size:22px;line-height:1.4}
+.demo small{font-size:15px;color:var(--ink-2);line-height:1.6}
+.demo .go{font-size:15px;font-weight:700;color:var(--blue)}
+@media (max-width:760px){.demo{grid-template-columns:1fr}.demo span{padding:0 6px 6px}}
+.proof{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:1000px){.proof{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.proof{grid-template-columns:1fr}}
+.pc{display:flex;flex-direction:column;gap:8px;background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:18px;text-decoration:none;color:var(--ink);box-shadow:var(--shadow);min-height:44px}
+.pc:hover{border-color:var(--blue)}
+.pc .id{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;color:var(--blue)}
+.pc b{font-size:18px;line-height:1.35}
+.pc .ev{font-size:14px;color:var(--ink-2);line-height:1.6;flex-grow:1}
+.pc .rl{font-size:12.5px;font-weight:700;color:var(--amber)}
+.pc .go{font-size:13px;color:var(--blue)}
+.honest{font-size:14px;color:var(--ink-3)}
+.car{display:grid;gap:10px;margin-top:4px}
+.car div{display:grid;grid-template-columns:52px minmax(0,1fr);gap:8px;align-items:baseline}
+.car dt,.car .k2{font-size:12.5px;font-weight:700;color:var(--ink-3);letter-spacing:.04em}
+.car p{font-size:14.5px;color:var(--ink-2);margin:0}
+.car .r p{color:var(--ink)}
+.wide{grid-column:1/-1;display:grid;gap:12px}
+.wide h4{margin:0;font-size:17px}
+.wide .note{font-size:13.5px;color:var(--ink-3)}
+.tbl{width:100%;border-collapse:collapse;font-size:14.5px;background:var(--sheet);border:1px solid var(--rule);border-radius:10px;overflow:hidden}
+.tbl th,.tbl td{border-bottom:1px solid var(--rule);padding:10px 12px;text-align:left;vertical-align:top}
+.tbl th{background:var(--paper);font-size:13px;color:var(--ink-3);font-weight:700}
+.tbl td.pain{color:var(--amber)}
+.tblw{overflow-x:auto}
+.fa{display:grid;gap:8px;background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:16px}
+.fa-row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px;align-items:center}
+.fa-m{background:var(--navy);color:var(--sheet);font-weight:700;font-size:14px;border-radius:8px;padding:8px 10px;text-align:center}
+.fa-c{display:flex;flex-wrap:wrap;gap:6px}
+.fa-c span{font-size:13px;border:1px solid var(--rule);background:var(--paper);border-radius:6px;padding:4px 8px}
+.fa-c span.hl{background:var(--amber-soft);border:2px solid var(--amber);font-weight:700}
+@media (max-width:640px){.fa-row{grid-template-columns:1fr}}
+.dec{background:var(--amber-soft);border:1px solid var(--amber-line);border-radius:12px;padding:16px 18px;display:grid;gap:8px}
+.dec small{font-size:12px;font-weight:700;color:var(--amber);letter-spacing:.06em}
+.dec b{font-size:17px}
+.dec ol{margin:0;padding-left:20px;font-size:14.5px;color:var(--ink-2);display:grid;gap:4px}
+.dec ol li.pick{color:var(--ink);font-weight:700}
+.dec p{font-size:14.5px;color:var(--ink-2);margin:0}
+.seq{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:12px;overflow-x:auto}
+.seq svg{display:block;min-width:720px;width:100%;height:auto}
+.seq .ll{stroke:var(--rule);stroke-width:2;stroke-dasharray:4 4}
+.seq .hd rect{fill:var(--navy)}
+.seq .hd text{fill:#fff;font-size:13px;font-weight:700}
+.seq .m line{stroke:var(--ink-2);stroke-width:1.6}
+.seq .m.r line{stroke-dasharray:5 4;stroke:var(--ink-3)}
+.seq .m text{fill:var(--ink);font-size:12.5px}
+.seq .ph rect{fill:var(--blue-soft)}
+.seq .ph text{fill:var(--blue);font-size:12.5px;font-weight:700}
+.seq .ah{fill:var(--ink-2)}
+.caps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:820px){.caps{grid-template-columns:1fr}}
+.cap{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:16px 18px;display:grid;gap:4px;align-content:start}
+.cap .cn{font-family:var(--f-mono);font-size:30px;font-weight:600;color:var(--amber);line-height:1}
+.cap b{font-size:17px}
+.cap span:last-child{font-size:14.5px;color:var(--ink-2)}
+.miniflow{display:grid;grid-template-columns:auto minmax(0,1fr) auto minmax(0,1fr) auto;gap:10px;align-items:center;background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:18px}
+.mf-n{background:var(--navy);color:var(--sheet);font-weight:700;font-size:15px;border-radius:8px;padding:12px 16px;text-align:center;white-space:nowrap}
+.mf-a{display:grid;gap:6px;text-align:center;font-size:13.5px;color:var(--ink-2)}
+.mf-a span{border-bottom:2px solid var(--rule);padding-bottom:4px}
+@media (max-width:820px){.miniflow{grid-template-columns:1fr}.mf-a span{border:0}}
+details.more{border:1px dashed var(--rule);border-radius:12px;padding:12px 16px}
+details.more[open]{display:grid;gap:16px}
+details.more summary{cursor:pointer;font-weight:700;color:var(--blue);font-size:15px;min-height:32px;display:flex;align-items:center}
+details.more[open] summary{margin-bottom:12px}
+.rules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:820px){.rules{grid-template-columns:1fr}}
+.rule{background:var(--sheet);border:1px solid var(--rule);border-radius:10px;padding:12px 14px;display:grid;gap:4px}
+.rule b{font-size:14.5px}
+.rule span{font-size:14px;color:var(--ink-2)}
+</style>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="#top"><b>系統分析／系統企劃作品集</b><span>PORTFOLIO 2026</span></a>
+    <nav class="nav" aria-label="頁面導覽">
+      <a href="#works">主要作品</a>
+      <a href="#api">系統介接</a>
+      <a href="#workflow">工作方式</a>
+      <a href="#course">課程專題</a>
+      <a href="#others">其他作品</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="top">
+  <section class="hero" aria-label="自我介紹">
+    <div class="who">
+      <h1>許丹合</h1>
+      <span class="jt">系統分析<i>／</i>系統企劃</span>
+    </div>
+    <p class="thesis">把現場的業務需求，<em>寫成工程師能開發、QA 能驗收的規格。</em></p>
+    <div class="meta"><span>近 8 年系統分析與企劃經驗</span><span>工作地點：台中／遠端</span><span>也適用：系統分析師（SA）、Business Analyst</span></div>
+    <a class="demo" href="https://claude.ai/artifact/UgMDJDJhoridrX4Cu24dST#play" target="_blank" rel="noopener"><img src="img/erp-demo-cover.jpg" alt="門市管理 ERP 60 秒產品展示封面"><span><span class="k">PRODUCT DEMO｜約 1 分鐘</span><b>門市管理 ERP 產品展示</b><small>登記一筆營收 → 自動扣庫存 → 改單同步重建 → 月報即時計算，並拆解背後的 API 與資料表設計。畫面皆為實際操作 Demo 系統。</small><span class="go">▶ 播放影片</span></span></a>
+    <div class="proof">
+      <a class="pc" href="#c1"><span class="id">CASE 01</span><b>多語言資源平台</b><span class="ev">自己寫的 PRD → 85 頁 SRS → 可操作系統，API 與端對端測試全數通過</span><span class="rl">我的角色：PRD 作者</span><span class="go">看案例 ↓</span></a>
+      <a class="pc" href="#c2"><span class="id">CASE 02</span><b>輕量 ERP</b><span class="ev">兩家門市用了兩年的 Excel 規則 → 業務規則與測試案例 → ERP 原型</span><span class="rl">我的角色：Excel 工具設計者</span><span class="go">看案例 ↓</span></a>
+      <a class="pc" href="#c3"><span class="id">CASE 03</span><b>平台營運後台</b><span class="ev">0 到 1 開發的營運後台：訪談整理功能架構，再寫成各頁規格</span><span class="rl">我的角色：PRD 作者</span><span class="go">看案例 ↓</span></a>
+      <a class="pc" href="#api"><span class="id">INTEGRATION</span><b>系統介接規劃</b><span class="ev">機台 × 雲端錢包 × 外部遊戲平台：釐清資料流向、分工與例外規則</span><span class="rl">我的角色：專案管理師</span><span class="go">看案例 ↓</span></a>
+    </div>
+    <p class="honest">每個案例都標明哪些是我寫的、哪些由 AI 改寫或實作。</p>
+  </section>
+
+  <section class="sec" id="works" aria-labelledby="works-h">
+    <div class="works-h">
+      <div class="sec-h">
+        <span class="eyebrow">Works</span>
+        <h2 id="works-h">同一份作品，看三個階段</h2>
+        <p>三個案例的原始版本都是我親手做的：兩份 PRD，和一套實際營運兩年的 Excel 工具。左邊是原始版本，中間是交給 AI 改寫、補強後的文件，右邊是照文件做出來的系統。點圖片可以直接開啟對應的文件或網站。</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>3＋1</b><span>系統作品＋AI 實作專題</span></div>
+        <div class="stat"><b>62</b><span>項規格問題逐條審查（平台營運後台）</span></div>
+        <div class="stat"><b>100/100</b><span>完整版 API＋端對端測試通過</span></div>
+      </div>
+    </div>
+
+    <!-- CASE 01 -->
+    <article class="case" aria-labelledby="c1">
+      <div class="case-h">
+        <div>
+          <span class="id">CASE 01</span>
+          <h3 id="c1">多語言資源平台</h3>
+          <span class="sub">遊戲美術多語系資源管理後台</span>
+        </div>
+        <div class="mine"><small>我的角色</small><b>PRD 作者</b><p>需求規劃與原始規格由我撰寫；AI 改寫時，每個規格問題由我決定，並負責最終驗收。</p><span class="sdd">SDD 規格驅動開發</span></div>
+          <dl class="car"><div><dt>挑戰</dt><dd style="margin:0"><p>企劃新增或修改需求後，美術組長沒有同步到，企劃、美術、RD 三方花很多時間溝通與返工。</p></dd></div><div><dt>行動</dt><dd style="margin:0"><p>盤點企劃 → 美術 → 研發的作業流程，定義 5 類角色、4 種語言的任務分配、製作狀態、變更標記、驗收與匯出規則，寫成 PRD 與 Axure 原型。</p></dd></div><div class="r"><dt>結果</dt><dd style="margin:0"><p>規格完整到 AI 能直接照著開發：完整版系統 API 70/70、端對端 30/30 測試通過；開發中發現的規格問題全部回寫 SRS。</p></dd></div></dl>
+      </div>
+      <div class="stages">
+        <div class="card o">
+          <div class="card-top"><span class="no">01</span><span class="st">原本</span></div>
+          <a class="shot" href="https://drive.google.com/file/d/13Cj1jUxcyhE-wstCRn7k5ogj598GHfPS/view" target="_blank" rel="noopener" aria-label="開啟：PRD 與 Axure 原型"><img src="img/sa-30984edf.webp" alt="原始 PRD V6 的 Axure 畫面原型，標號對應功能權限表" loading="lazy"></a>
+          <div class="card-b"><h4>PRD 與 Axure 原型</h4><span class="badge mine-b">本人撰寫</span>
+            <ul><li>Axure 畫面原型：列表、分配、編輯資源抽屜，標號對應功能權限表</li><li>PRD V6：功能範圍、角色權限與操作規則</li><li>FigJam 工作分派流程：企劃 → 美術組長 → 美術 → 審核</li></ul>
+            <div class="ctas"><a class="btn ghost" href="https://drive.google.com/file/d/13Cj1jUxcyhE-wstCRn7k5ogj598GHfPS/view" target="_blank" rel="noopener">看原始 PRD（PDF）</a></div></div>
+        </div>
+        <div class="card a">
+          <div class="card-top"><span class="no">02</span><span class="st">AI 賦能</span></div>
+          <a class="shot" href="https://drive.google.com/file/d/1pf7vYh--Ub0YVenQMFYzyg22fSGpTIJp/view" target="_blank" rel="noopener" aria-label="開啟：SRS 軟體需求規格書"><img src="img/sa-e4d979ec.webp" alt="SRS 封面與 ERD 頁" loading="lazy"></a>
+          <div class="card-b"><h4>SRS 軟體需求規格書（85 頁）</h4><span class="badge ai-b">我的規格 → AI 改寫</span>
+            <ul><li>角色權限、功能需求、資料表、API、錯誤碼</li><li>泳道圖、ERD、需求追溯矩陣</li><li>附原始 PRD 畫面對照，逐圖寫明修訂之處</li></ul>
+            <div class="ctas"><a class="btn ghost" href="https://drive.google.com/file/d/1pf7vYh--Ub0YVenQMFYzyg22fSGpTIJp/view" target="_blank" rel="noopener">看 SRS 正式版（PDF）</a></div></div>
+        </div>
+        <div class="card d">
+          <div class="card-top"><span class="no">03</span><span class="st">Demo 網站</span></div>
+          <a class="shot" href="https://multilingual-resource-platform-v2.lazyer1016.chatgpt.site/" target="_blank" rel="noopener" aria-label="開啟：完整版系統專案列表"><img src="img/sa-9b8f4c14.webp" alt="完整版系統的專案管理列表，以超管身分預覽" loading="lazy"></a>
+          <div class="card-b"><h4>完整版系統</h4><span class="badge full">前端＋API＋資料庫</span>
+            <ul><li>AI 只照 SRS 開發，規格沒寫清楚就停下來，由我決定後回寫 SRS</li><li>權限在伺服器檢查，五種角色免帳密登入</li><li>API 70/70、端對端 30/30 測試通過</li></ul>
+            <div class="ctas"><a class="btn" href="https://multilingual-resource-platform-v2.lazyer1016.chatgpt.site/" target="_blank" rel="noopener">開啟網站</a></div></div>
+        </div>
+      </div>
+      <div class="change"><b>AI 帶來的改變</b><span>・規格從「給人看」變成「AI 能照著開發」</span><span>・AI 開發時找出的規格問題，全部補回 SRS</span><span>・原型當對照組，驗證規格是否足夠</span></div>
+    </article>
+
+    <!-- CASE 02 -->
+    <article class="case" aria-labelledby="c2">
+      <div class="case-h">
+        <div>
+          <span class="id">CASE 02</span>
+          <h3 id="c2">輕量 ERP</h3>
+          <span class="sub">門市營收、庫存與排班</span>
+        </div>
+        <div class="mine"><small>我的角色</small><b>Excel 工具設計者</b><p>營收登記、月結、排班的 Excel 工具由我設計，業務規則來自實際營運；以這些規則為基礎請 AI 產出規格，並由我確認實作結果、設計驗收案例。</p><span class="sdd">SDD 規格驅動開發</span></div>
+          <dl class="car"><div><dt>挑戰</dt><dd style="margin:0"><p>兩家門市靠 Excel 登記營收：選錯服務人員抽成就算錯、公式一動就壞、月底要花半天對帳；改單或刪單時，庫存常沒跟著改。</p></dd></div><div><dt>行動</dt><dd style="margin:0"><p>把兩年實際營運的 Excel 規則整理成 8 條業務規則、5 張資料表關聯、12 種例外情境與 11 個驗收測試案例，再交由 AI 實作成 ERP 原型。</p></dd></div><div class="r"><dt>結果</dt><dd style="margin:0"><p>Excel 工具在兩家門市實際使用兩年以上；ERP 原型完成，每條規則都有對應的測試案例（離職後作為作品重建，未在門市試行）。</p></dd></div></dl>
+      </div>
+      <div class="stages">
+        <div class="card o">
+          <div class="card-top"><span class="no">01</span><span class="st">原本</span></div>
+          <a class="shot" href="https://drive.google.com/drive/folders/1L-TLNO0AfGW4uEdd3fh5Z0kVTpdPXE6B" target="_blank" rel="noopener" aria-label="開啟：Excel 營運工具"><img src="img/sa-f281f9d1.webp" alt="Excel 營收登記表，購買人已隱藏" loading="lazy"></a>
+          <div class="card-b"><h4>Excel 營運工具</h4><span class="badge mine-b">本人設計</span>
+            <ul><li>營收登記、月結、排班 Excel，兩家門市實際使用兩年以上</li><li>月報自動算出付費率、ARPU、ARPPU 與目標達成率</li><li>營運中累積的業務規則，成為後續系統規格的基礎</li></ul>
+            <div class="ctas"><a class="btn ghost" href="https://drive.google.com/drive/folders/1L-TLNO0AfGW4uEdd3fh5Z0kVTpdPXE6B" target="_blank" rel="noopener">看 Excel 營運工具（資料夾）</a></div></div>
+        </div>
+        <div class="card a">
+          <div class="card-top"><span class="no">02</span><span class="st">AI 賦能</span></div>
+          <a class="shot" href="https://drive.google.com/file/d/1jxeZFmg3LPu0YT0PoDfxF84w5GoijoRw/view" target="_blank" rel="noopener" aria-label="開啟：系統分析文件"><img src="img/sa-202e94c5.webp" alt="輕量 ERP 系統分析文件封面與資料關聯頁" loading="lazy"></a>
+          <div class="card-b"><h4>系統分析文件（20 頁）</h4><span class="badge ai-b">我的 Excel 規則 → AI 產出規格</span>
+            <ul><li>ERD、使用案例、循序圖</li><li>營收主檔、明細、品項、庫存異動、人員 5 張表的關聯</li><li>業務規則 BR-01～08 對應測試案例 TC-01～11</li><li>找出 5 個待釐清問題，提出 5 項改善提案</li></ul>
+            <div class="ctas"><a class="btn ghost" href="https://drive.google.com/file/d/1jxeZFmg3LPu0YT0PoDfxF84w5GoijoRw/view" target="_blank" rel="noopener">看系統分析文件（PDF）</a></div></div>
+        </div>
+        <div class="card d">
+          <div class="card-top"><span class="no">03</span><span class="st">Demo 網站</span></div>
+          <a class="shot" href="https://unv-plan-erp-demo.lazyer1016.chatgpt.site/dashboard" target="_blank" rel="noopener" aria-label="開啟：ERP 營收登記頁"><img src="img/sa-1fd70cbc.webp" alt="ERP 營收登記頁" loading="lazy"></a>
+          <div class="card-b"><h4>ERP 原型</h4><span class="badge full">前端＋API＋資料庫</span>
+            <ul><li>以兩年的 Excel 業務規則為需求來源，AI 實作成 ERP，再回寫成規格文件</li><li>營收、庫存、零用金、排班、月報，依規則自動計算抽成</li><li>登入頁附 Demo 帳號，示範資料可一鍵重置</li><li>延伸設計「數據小島」：3D 小島對應 ERP 各模組，營運燈號、系統監控與數據總覽同一頁；手機自動改看原本報表</li></ul>
+            <a class="mini" href="https://claude.ai/artifact/M5C7bXiiN5gMKhbtENv6Fh" target="_blank" rel="noopener" aria-label="開啟：數據小島"><img src="img/sa-a9d7f594.webp" alt="數據小島：八座小島對應 ERP 模組，標示營運與系統狀態"><span><b>延伸作品｜數據小島</b><small>點圖直接操作</small></span></a>
+            <div class="ctas"><a class="btn" href="https://unv-plan-erp-demo.lazyer1016.chatgpt.site/dashboard" target="_blank" rel="noopener">開啟網站</a></div></div>
+        </div>
+      </div>
+      <div class="wide">
+        <h4>改善前後流程對照（As-Is／To-Be）</h4>
+        <div class="tblw"><table class="tbl">
+          <thead><tr><th scope="col">環節</th><th scope="col">改善前：Excel</th><th scope="col">改善後：ERP</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">登記銷售</th><td class="pain">手動選服務人員，選錯抽成就算錯</td><td>系統依規則帶出可選人員與抽成</td></tr>
+            <tr><th scope="row">改單、刪單</th><td class="pain">要另外手動改庫存，常漏改</td><td>庫存自動同步重建</td></tr>
+            <tr><th scope="row">計算公式</th><td class="pain">有人動到公式就壞</td><td>規則寫在系統裡，使用者改不到</td></tr>
+            <tr><th scope="row">月結</th><td class="pain">店長花半天對帳</td><td>月報自動產出</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="change"><b>AI 帶來的改變</b><span>・散在 Excel 裡的營運規則，整理成可追溯的 BR／E／TC</span><span>・商品賣出自動扣庫存，改單、刪單時庫存同步重建</span></div>
+    </article>
+
+    <!-- CASE 03 -->
+    <article class="case" aria-labelledby="c3">
+      <div class="case-h">
+        <div>
+          <span class="id">CASE 03</span>
+          <h3 id="c3">平台營運後台</h3>
+          <span class="sub">代理錢包、帳戶錢包、數據總覽｜後台共 27 頁，取其中 3 頁展示</span>
+        </div>
+        <div class="mine"><small>我的角色</small><b>PRD 作者</b><p>原始 PRD 由我撰寫；AI 審查出的問題由我逐條決定修改方向，並確認修正版規格。</p><span class="sdd">SDD 規格驅動開發</span></div>
+          <dl class="car"><div><dt>挑戰</dt><dd style="margin:0"><p>從 0 到 1 開發日本營運後台，沒有舊系統可參考；代理與玩家之間的點數流向複雜。</p></dd></div><div><dt>行動</dt><dd style="margin:0"><p>向主管訪談業務需求，整理成 5 大模組的功能架構；整合外部廠商手冊與既有產品，寫出各頁規格。之後用 AI 逐條審查其中 3 頁規格並改版。</p></dd></div><div class="r"><dt>結果</dt><dd style="margin:0"><p>規格成為開發與驗收依據，協調跨國團隊完成進測；審查出的問題全部有結論才定稿。</p></dd></div></dl>
+      </div>
+      <div class="stages">
+        <div class="card o">
+          <div class="card-top"><span class="no">01</span><span class="st">原本</span></div>
+          <a class="shot" href="https://drive.google.com/drive/folders/1MjLGHZaVC6dcilwjchDh2x1jsvvbufGU" target="_blank" rel="noopener" aria-label="開啟：原規格示意圖"><img src="img/sa-3d159242.webp" alt="原規格的代理錢包列表示意圖" loading="lazy"></a>
+          <div class="card-b"><h4>原 Excel 後台規格</h4><span class="badge mine-b">本人撰寫</span>
+            <ul><li>三個頁面的欄位、畫面與操作說明</li><li>先拆解整個平台的功能模組，再寫到單一頁面的規格</li></ul>
+            <div class="ctas"><a class="btn ghost" href="https://drive.google.com/drive/folders/1MjLGHZaVC6dcilwjchDh2x1jsvvbufGU" target="_blank" rel="noopener">看原始 PRD（資料夾）</a></div></div>
+        </div>
+        <div class="card a">
+          <div class="card-top"><span class="no">02</span><span class="st">AI 賦能</span></div>
+          <a class="shot" href="https://drive.google.com/drive/folders/11hyNKuiEfF3kvBa8sy9i-UBZZUxvZWEP" target="_blank" rel="noopener" aria-label="開啟：規格審查與修正版"><img src="img/sa-93eb63a7.webp" alt="代理錢包功能規格書 V6 封面與修訂摘要" loading="lazy"></a>
+          <div class="card-b"><h4>規格審查與修正版 V6</h4><span class="badge ai-b">我的規格 → AI 改寫</span>
+            <ul><li>代理錢包 24 項、帳戶錢包 18 項、數據總覽 20 項問題逐條審查</li><li>新增點數來源機制，避免點數被挪用</li><li>修正版規格＋操作流程圖</li></ul>
+            <div class="ctas"><a class="btn ghost" href="https://drive.google.com/drive/folders/11hyNKuiEfF3kvBa8sy9i-UBZZUxvZWEP" target="_blank" rel="noopener">看三份 V6 規格書（資料夾）</a></div></div>
+        </div>
+        <div class="card d">
+          <div class="card-top"><span class="no">03</span><span class="st">Demo 網站</span></div>
+          <a class="shot" href="https://agent-wallet-portfolio-demo.lazyer1016.chatgpt.site/" target="_blank" rel="noopener" aria-label="開啟：代理錢包互動原型"><img src="img/sa-e8b84be7.webp" alt="代理錢包互動原型的系統上下分彈窗" loading="lazy"></a>
+          <div class="card-b"><h4>後台互動原型</h4><span class="badge front">僅前端畫面</span>
+            <ul><li>呈現代理錢包、帳戶錢包、數據總覽的畫面與操作流程</li><li>用來確認規則在畫面上是否說得通</li></ul>
+            <div class="ctas">
+              <a class="btn" href="https://agent-wallet-portfolio-demo.lazyer1016.chatgpt.site/" target="_blank" rel="noopener">代理錢包</a>
+              <a class="btn ghost" href="https://account-wallet-original-portfolio.lazyer1016.chatgpt.site/" target="_blank" rel="noopener">帳戶錢包</a>
+              <a class="btn ghost" href="https://data-overview-dashboard-xudanhe.lazyer1016.chatgpt.site/" target="_blank" rel="noopener">數據總覽</a>
+            </div></div>
+        </div>
+      </div>
+      <div class="wide">
+        <h4>功能架構：整個後台長什麼樣、展示的 3 頁在哪裡</h4>
+        <div class="fa"><div class="fa-row"><div class="fa-m">會員機制</div><div class="fa-c"><span>註冊・登入（含第三方、OTP）</span><span>找回／修改密碼</span><span>會員中心</span><span>會員管理與狀態</span><span>手動上下分</span><span>OTP・IP 黑白名單</span><span>多語系支援</span></div></div><div class="fa-row"><div class="fa-m">代理機制</div><div class="fa-c"><span class="hl">01 代理錢包</span><span class="hl">02 帳戶錢包</span><span>前端遊戲控制</span><span>RTP 設置</span><span>代理狀態</span><span>前端域名控制</span></div></div><div class="fa-row"><div class="fa-m">存／提</div><div class="fa-c"><span>充值頁・提款頁</span><span>會員銀行卡</span><span>渠道管理</span><span>支付管理</span><span>充提帳變</span><span>提款審核</span></div></div><div class="fa-row"><div class="fa-m">拉單系統（報表）</div><div class="fa-c"><span>帳變</span><span>注單明細</span><span class="hl">03 數據總覽</span><span>財務報表</span><span>系統規格</span></div></div><div class="fa-row"><div class="fa-m">客服與內容管理</div><div class="fa-c"><span>客服系統</span><span>遊戲供應商接入</span><span>市場區隔（IP・幣種限制）</span></div></div></div>
+        <p class="note">由主管口述業務需求，我整理成功能架構圖（原為 XMind，此處只列到第二層）；橘框為下方展示的 3 頁規格。</p>
+      </div>
+      <div class="wide">
+        <div class="dec"><small>規格取捨</small><b>加贈點數由誰出資？</b>
+          <ol><li>固定由公司出資</li><li>固定由代理出資</li><li class="pick">依代理設定出資方（採用）</li></ol>
+          <p>由誰出資，是公司跟每位代理談生意時的條件，不同代理可能不一樣，所以規格不寫死，改成可以依代理設定。</p>
+        </div>
+      </div>
+      <div class="change"><b>AI 帶來的改變</b><span>・62 項問題全部有結論，才寫成正式規格</span><span>・統一用語，避免同一個代號指兩件事</span></div>
+    </article>
+  </section>
+
+  <section class="sec" id="api" aria-labelledby="api-h">
+    <div class="sec-h">
+      <span class="eyebrow">Integration</span>
+      <h2 id="api-h">系統介接規劃｜機台 × 雲端錢包 × 外部遊戲平台</h2>
+      <p>在安特擔任專案管理師時，實體遊戲機要接入外部的線上遊戲。我負責釐清三方的資料流向、團隊分工與例外規則，召集會議逐條確認待釐清問題，整理成開發與測試的依據；實際串接由後端工程師實作。</p>
+    </div>
+    <div class="caps">
+      <div class="cap"><span class="cn">3</span><b>個系統的資料流向</b><span>機台、雲端錢包、外部遊戲平台之間，餘額何時轉入、何時轉回</span></div>
+      <div class="cap"><span class="cn">5</span><b>個團隊的分工</b><span>企劃、後端、平台、QA 與外部廠商，各自要做哪些項目與 API</span></div>
+      <div class="cap"><span class="cn">6</span><b>條例外規則</b><span>延遲派彩、斷電重開等情境，召集會議逐條確認</span></div>
+    </div>
+    <div class="miniflow" role="img" aria-label="機台與雲端錢包互相轉入轉回餘額，外部遊戲平台對雲端錢包下注與派彩">
+      <div class="mf-n">機台</div>
+      <div class="mf-a"><span>進入遊戲：餘額轉入 →</span><span>← 離開遊戲：餘額轉回</span></div>
+      <div class="mf-n">雲端錢包</div>
+      <div class="mf-a"><span>← 下注扣款・派彩</span></div>
+      <div class="mf-n">外部遊戲平台</div>
+    </div>
+    <div class="wide">
+      <h4>會議中確認的規則與例外情境</h4>
+      <div class="rules">
+        <div class="rule"><b>延遲派彩</b><span>玩家下注後、開獎前就離開去玩 Slot；開獎贏分時，等 Slot 轉完才跳出補分通知，由玩家點選加回額度。</span></div>
+        <div class="rule"><b>斷電重開</b><span>開機時檢查前一刻是否在網路遊戲中；雲端錢包若還有錢，跳通知，玩家確認後拿回機台。</span></div>
+        <div class="rule"><b>網路遊戲進行中</b><span>不能開分、洗分、入鈔；要洗分必須先把雲端錢包的錢拉回機台。</span></div>
+        <div class="rule"><b>稽查</b><span>網路遊戲需要能快速關閉。</span></div>
+        <div class="rule"><b>載入時斷線</b><span>依錯誤碼顯示對應訊息。</span></div>
+        <div class="rule"><b>後台報表</b><span>贏輸報表只放彙總資料，從外部平台的 API 拉取，並依遊戲分開顯示。</span></div>
+      </div>
+    </div>
+    <details class="more">
+      <summary>展開看完整規格：介接循序圖與介接規格表</summary>
+      <div class="wide">
+        <h4>資料怎麼流動</h4>
+        <div class="seq"><svg viewBox="0 0 780 728" role="img" aria-label="機台與雲端錢包、外部遊戲平台的介接循序圖：進入遊戲、遊戲中、離開遊戲與補分四段流程"><line class="ll" x1="70" y1="38" x2="70" y2="728"/><line class="ll" x1="215" y1="38" x2="215" y2="728"/><line class="ll" x1="375" y1="38" x2="375" y2="728"/><line class="ll" x1="535" y1="38" x2="535" y2="728"/><line class="ll" x1="690" y1="38" x2="690" y2="728"/><g class="hd"><rect x="8" y="8" width="124" height="30" rx="6"/><text x="70" y="28" text-anchor="middle">玩家</text></g><g class="hd"><rect x="153" y="8" width="124" height="30" rx="6"/><text x="215" y="28" text-anchor="middle">機台畫面</text></g><g class="hd"><rect x="313" y="8" width="124" height="30" rx="6"/><text x="375" y="28" text-anchor="middle">機台內部 API</text></g><g class="hd"><rect x="473" y="8" width="124" height="30" rx="6"/><text x="535" y="28" text-anchor="middle">雲端錢包</text></g><g class="hd"><rect x="628" y="8" width="124" height="30" rx="6"/><text x="690" y="28" text-anchor="middle">外部遊戲平台</text></g><g class="ph"><rect x="8" y="59" width="764" height="22" rx="4"/><text x="16" y="74">進入遊戲：餘額從機台轉入雲端錢包</text></g><g class="m"><line x1="70" y1="100" x2="206" y2="100"/><path class="ah" d="M213 100 L204 95 L204 105 Z"/><text x="142.5" y="94" text-anchor="middle">點「進入遊戲」</text></g><g class="m"><line x1="215" y1="130" x2="366" y2="130"/><path class="ah" d="M373 130 L364 125 L364 135 Z"/><text x="295.0" y="124" text-anchor="middle">遊戲代碼</text></g><g class="m"><line x1="375" y1="160" x2="526" y2="160"/><path class="ah" d="M533 160 L524 155 L524 165 Z"/><text x="455.0" y="154" text-anchor="middle">遊戲代碼＋機台餘額</text></g><g class="m r"><line x1="535" y1="190" x2="384" y2="190"/><path class="ah" d="M377 190 L386 185 L386 195 Z"/><text x="455.0" y="184" text-anchor="middle">遊戲網址</text></g><g class="m r"><line x1="375" y1="220" x2="224" y2="220"/><path class="ah" d="M217 220 L226 215 L226 225 Z"/><text x="295.0" y="214" text-anchor="middle">開啟遊戲畫面</text></g><g class="ph"><rect x="8" y="245" width="764" height="22" rx="4"/><text x="16" y="260">遊戲中：外部平台以單一錢包下注、派彩</text></g><g class="m"><line x1="690" y1="286" x2="544" y2="286"/><path class="ah" d="M537 286 L546 281 L546 291 Z"/><text x="612.5" y="280" text-anchor="middle">下注扣款／派彩</text></g><g class="ph"><rect x="8" y="311" width="764" height="22" rx="4"/><text x="16" y="326">離開遊戲：餘額從雲端錢包轉回機台</text></g><g class="m"><line x1="70" y1="352" x2="206" y2="352"/><path class="ah" d="M213 352 L204 347 L204 357 Z"/><text x="142.5" y="346" text-anchor="middle">點「離開遊戲」</text></g><g class="m"><line x1="215" y1="382" x2="366" y2="382"/><path class="ah" d="M373 382 L364 377 L364 387 Z"/><text x="295.0" y="376" text-anchor="middle">離開</text></g><g class="m"><line x1="375" y1="412" x2="526" y2="412"/><path class="ah" d="M533 412 L524 407 L524 417 Z"/><text x="455.0" y="406" text-anchor="middle">取回餘額</text></g><g class="m r"><line x1="535" y1="442" x2="384" y2="442"/><path class="ah" d="M377 442 L386 437 L386 447 Z"/><text x="455.0" y="436" text-anchor="middle">餘額</text></g><g class="m r"><line x1="375" y1="472" x2="224" y2="472"/><path class="ah" d="M217 472 L226 467 L226 477 Z"/><text x="295.0" y="466" text-anchor="middle">額度刷新</text></g><g class="ph"><rect x="8" y="497" width="764" height="22" rx="4"/><text x="16" y="512">補分：處理離開後才開獎的延遲派彩</text></g><g class="m"><line x1="375" y1="538" x2="526" y2="538"/><path class="ah" d="M533 538 L524 533 L524 543 Z"/><text x="455.0" y="532" text-anchor="middle">排程檢查有無派彩</text></g><g class="m r"><line x1="535" y1="568" x2="384" y2="568"/><path class="ah" d="M377 568 L386 563 L386 573 Z"/><text x="455.0" y="562" text-anchor="middle">有派彩 → 移到暫存錢包</text></g><g class="m r"><line x1="375" y1="598" x2="224" y2="598"/><path class="ah" d="M217 598 L226 593 L226 603 Z"/><text x="295.0" y="592" text-anchor="middle">跳出補分通知</text></g><g class="m"><line x1="70" y1="628" x2="206" y2="628"/><path class="ah" d="M213 628 L204 623 L204 633 Z"/><text x="142.5" y="622" text-anchor="middle">點「補分」</text></g><g class="m"><line x1="215" y1="658" x2="366" y2="658"/><path class="ah" d="M373 658 L364 653 L364 663 Z"/><text x="295.0" y="652" text-anchor="middle">補分</text></g><g class="m r"><line x1="375" y1="688" x2="224" y2="688"/><path class="ah" d="M217 688 L226 683 L226 693 Z"/><text x="295.0" y="682" text-anchor="middle">暫存金額加回機台額度</text></g></svg></div>
+        <p class="note">依團隊的介接設計文件重繪，已去除廠商與內部系統名稱。實線為呼叫，虛線為回應。</p>
+      </div>
+      <div class="wide">
+        <h4>介接規格表</h4>
+        <div class="tblw"><table class="tbl">
+        <thead><tr><th scope="col">介接項目</th><th scope="col">呼叫方 → 被呼叫方</th><th scope="col">傳遞的資料</th><th scope="col">時機</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">進入遊戲</th><td>機台 → 雲端錢包</td><td>遊戲代碼、機台餘額；回傳遊戲網址</td><td>玩家點「進入遊戲」</td></tr>
+          <tr><th scope="row">下注與派彩</th><td>外部遊戲平台 → 雲端錢包</td><td>下注扣款、派彩金額（單一錢包）</td><td>遊戲進行中</td></tr>
+          <tr><th scope="row">離開遊戲</th><td>機台 → 雲端錢包</td><td>取回餘額；回傳最新餘額</td><td>玩家點「離開遊戲」</td></tr>
+          <tr><th scope="row">回報補分</th><td>機台 → 雲端錢包</td><td>查詢延遲派彩；有的話移到暫存錢包</td><td>排程定時檢查</td></tr>
+          <tr><th scope="row">補分</th><td>機台內部</td><td>暫存金額加回機台額度</td><td>玩家點「補分」</td></tr>
+          <tr><th scope="row">遊戲開關</th><td>機台內部 API → 機台平台</td><td>網路遊戲是否開啟</td><td>進入前判斷、稽查時快速關閉</td></tr>
+        </tbody>
+      </table></div>
+      </div>
+    </details>
+  </section>
+
+  <section class="sec" id="workflow" aria-labelledby="wf-h">
+    <div class="sec-h">
+      <span class="eyebrow">Workflow</span>
+      <h2 id="wf-h">我的工作方式</h2>
+      <p>AI 協作時，我把工作拆成三個角色，規格永遠只有一份標準。</p>
+    </div>
+    <div class="chain">
+      <div class="chain-h"><b>企劃能力｜每一步都由我主導</b><span>三個主要作品都走完這五步</span></div>
+      <ol class="steps">
+        <li><span class="n">01</span><span class="t">業務需求</span><span class="d">現場問題、角色與痛點</span></li>
+        <li><span class="n">02</span><span class="t">流程設計</span><span class="d">泳道圖、使用案例</span></li>
+        <li><span class="n">03</span><span class="t">系統規則</span><span class="d">業務規則 BR、例外情境</span></li>
+        <li><span class="n">04</span><span class="t">資料關聯</span><span class="d">ERD、資料表、API</span></li>
+        <li><span class="n">05</span><span class="t">驗收規格</span><span class="d">驗收條件、測試案例 TC</span></li>
+      </ol>
+      <div class="ai"><b>AI 加速</b><span>文件產製</span><span>原型開發</span><span>需求驗證</span><span>系統文件邏輯檢查與討論</span><small>縮短從概念到可操作成果的距離</small></div>
+    </div>
+    <div class="roles">
+      <div class="role me"><span class="k">定義與決策</span><h3>我</h3><ul><li>撰寫 PRD／SRS，規格是唯一標準</li><li>決定每一個規格問題</li><li>最終驗收</li></ul></div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="role"><span class="k">規格夥伴</span><h3>Claude</h3><ul><li>整理與改寫規格文件</li><li>檢查邏輯矛盾與漏洞，提出建議</li><li>每次發布前獨立複查</li></ul></div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="role"><span class="k">開發執行</span><h3>Codex</h3><ul><li>只照規格開發前後端與資料庫</li><li>撰寫並執行自動測試</li><li>發布 Demo 網站</li></ul></div>
+    </div>
+    <div class="loop"><b>↺ 回饋迴圈</b><span>開發中遇到規格沒寫清楚的地方，AI 不猜，記進「規格問題清單」→ 我決定 → 先改規格再改程式。</span></div>
+  </section>
+
+  <section class="sec" id="course" aria-labelledby="co-h">
+    <div class="sec-h">
+      <span class="eyebrow">2026 / 08 起</span>
+      <h2 id="co-h" style="font-size:clamp(22px,2.6vw,26px)">這段時間，我在做什麼</h2>
+      <p>離開上一份工作後，我參加了生成式 AI 課程，下面是課程的結業專題。同一段期間，我也用 AI 重新整理過去的規格，也就是上方三個作品的「AI 賦能」與「Demo」。</p>
+    </div>
+    <div class="course">
+      <a class="shot" href="https://parking-settlement-xdh.lazyer1016.chatgpt.site/" target="_blank" rel="noopener" aria-label="開啟：停好停滿手機畫面"><img src="img/sa-0244847f.webp" alt="停好停滿手機畫面：需求與方案、費率明細、汽車入口" loading="lazy"></a>
+      <div class="course-b">
+        <div style="display:flex;flex-wrap:wrap;gap:8px"><span class="badge ai-b">課程專題・從規劃到開發全程 AI 製作</span><span class="badge front">僅前端畫面</span></div>
+        <h3>停好停滿 PARK WELL</h3>
+        <p>AI 停車決策與費率試算服務。從找痛點、發想解法、品牌規劃到網頁 APP，每一步都用 AI 完成，驗證一個人能多快把想法變成可操作的產品。</p>
+        <ol class="flow">
+          <li><span class="n">01</span><span class="t">痛點</span><span class="d">停車場收費規則難懂，開車的人很難當下判斷停哪裡划算</span></li>
+          <li><span class="n">02</span><span class="t">創意發想</span><span class="d">用曼陀羅九宮格發散點子，再用創意矩陣組合、收斂出服務方向</span></li>
+          <li><span class="n">03</span><span class="t">品牌規劃書</span><span class="d">品牌命名、定位與視覺規劃</span></li>
+          <li><span class="n">04</span><span class="t">網頁 APP MVP</span><span class="d">停車場比較與費率試算，手機可直接操作</span></li>
+        </ol>
+        <div class="ctas" style="flex-direction:row;flex-wrap:wrap"><a class="btn" href="https://parking-settlement-xdh.lazyer1016.chatgpt.site/" target="_blank" rel="noopener">開啟 MVP（手機版）</a><a class="btn ghost" href="https://drive.google.com/file/d/131A9Ys3xeN5eYNUmxepZ66qeIrK3sAog/view" target="_blank" rel="noopener">看品牌規劃書（PDF）</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="others" aria-labelledby="ot-h">
+    <div class="sec-h">
+      <span class="eyebrow">More</span>
+      <h2 id="ot-h">其他作品</h2>
+      <p>不同類型的規劃與 AI 應用。</p>
+    </div>
+    <div class="others">
+      <div class="oc">
+        <a class="shot" href="https://rsg-project-plan.lazyer1016.chatgpt.site/" target="_blank" rel="noopener" aria-label="開啟：Project Plan"><img src="img/sa-52582429.webp" alt="Project Plan 專案時程畫面" loading="lazy"></a>
+        <div class="oc-b"><span class="ty">自製工具・Excel → 網頁系統</span><h4>Project Plan</h4>
+          <p>原本是我設計的 Excel 專案管理工具，但 Excel 很難看出每個人目前的工作量，開會時也要花時間逐一查任務進度。依同樣的邏輯重建成網頁版：用 Epic 與任務拆解專案，排程直接在甘特圖上編輯，人力負荷與進度一眼看清。</p>
+          <div class="ctas"><a class="btn ghost" href="https://rsg-project-plan.lazyer1016.chatgpt.site/" target="_blank" rel="noopener">開啟網站</a></div></div>
+      </div>
+      <div class="oc">
+        <div class="ph" aria-hidden="true">MARKET RESEARCH</div>
+        <div class="oc-b"><span class="ty">AI 應用・市調與創意企劃</span><h4>正昇食品 AI 行銷專題</h4>
+          <p>用 AI 完成豆腐乳海外市場調查，並把 750 個創意點子用 MECE 原則分類、收斂成提案。</p></div>
+      </div>
+      <div class="oc">
+        <div class="ph" aria-hidden="true">IN PROGRESS</div>
+        <div class="oc-b"><span class="ty">自薦提案</span><h4>宥杏 生產物流系統 Demo</h4>
+          <p>從職缺內容找出生產與物流痛點，主動規劃系統並做成 Demo。</p><span class="wip">製作中</span></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>許丹合｜系統分析／系統企劃</span>
+    <span>Demo 網站皆使用示範資料｜V2・2026.11.09</span>
+  </footer>
+</main>
+
+
+</body></html>
