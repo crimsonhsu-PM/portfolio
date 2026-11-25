@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>數據總覽 - 包網後台</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<main class="dashboard">
+  <header class="page-header">
+    <div class="page-title"><h1>數據總覽</h1><span>儀表板</span></div>
+    <div class="account"><span class="online-dot"></span><small id="lastUpdated">更新中</small><b>OP</b></div>
+  </header>
+
+  <section class="toolbar">
+    <div class="toolbar-left">
+      <button class="outline-btn" id="refreshBtn" type="button"><i class="refresh-icon">↻</i>刷新</button>
+      <button class="outline-btn" id="agentPickerBtn" type="button">選擇代理</button>
+      <button class="scope-chip" id="agentScopeLabel" type="button" aria-label="目前顯示全部代理，點此選擇代理" title="點此選擇代理">全部代理</button>
+    </div>
+    <div class="toolbar-right"><small id="agentScopeMeta">8 個計算節點</small><button class="export-btn" id="exportBtn" type="button">導出 <span>▾</span></button></div>
+  </section>
+
+  <section class="kpi-grid" id="kpiGrid" aria-label="數據總覽"></section>
+
+  <section class="stats-panel">
+    <div class="panel-band">數據統計</div>
+    <div class="stats-table" id="statsTable"></div>
+    <div class="mini-band">後台充提</div>
+    <div class="stats-table compact" id="adminStats"></div>
+    <div class="mini-band">線上充提</div>
+    <div class="stats-table compact" id="onlineStats"></div>
+    <div class="panel-band analysis-band">數據分析</div>
+    <div class="stats-table analysis-table" id="analysisStats"></div>
+    <div class="retention-row" id="retentionStats"></div>
+  </section>
+
+  <section class="charts" id="chartsGrid" aria-label="數據圖表分析">
+    <article class="chart-card" draggable="true" data-widget="online">
+      <button class="drag-handle" type="button" aria-label="拖曳圖表">☰</button>
+      <div class="chart-summary"><h2>在線用戶數</h2><strong id="onlineNow">0</strong><span>過去30分鐘使用裝置類別（Mobile 含平板）</span><div class="donut-wrap"><canvas id="deviceChart" aria-label="裝置分類：Desktop、Mobile（含平板）、App"></canvas><div class="donut-center" id="deviceCenter">0</div></div><div class="donut-legend" id="deviceLegend"></div></div>
+      <div class="chart-main"><h3 class="chart-title">今日 24 小時在線趨勢</h3><canvas id="onlineChart" aria-label="今日與昨日在線用戶數"></canvas><div class="line-legend"><span><i style="--c:#5367c5"></i>今日</span><span><i style="--c:#8d8d8d"></i>昨日</span></div></div>
+    </article>
+
+    <article class="chart-card" draggable="true" data-widget="validBet">
+      <button class="drag-handle" type="button" aria-label="拖曳圖表">☰</button>
+      <div class="chart-summary"><h2>最近30天有效投注</h2><strong id="betTotal">0</strong><span>遊戲類型</span><div class="donut-wrap"><canvas id="gameDonut"></canvas><div class="donut-center">30D</div></div><div class="donut-legend" id="gameLegend"></div></div>
+      <div class="chart-main"><div class="chart-filters"><select id="gameTypeSelect"><option value="all">遊戲類型</option><option>真人</option><option>電子</option><option>體育</option><option>棋牌</option><option>彩票</option></select><select><option>通道</option></select><select><option>遊戲</option></select></div><canvas id="betChart" aria-label="最近30天有效投注"></canvas><div class="line-legend" id="betLegend"></div></div>
+    </article>
+
+    <article class="chart-card" draggable="true" data-widget="deposit">
+      <button class="drag-handle" type="button" aria-label="拖曳圖表">☰</button>
+      <div class="chart-summary"><h2>最近30天充值</h2><strong id="depositTotal">0</strong><span>位置</span><div class="donut-wrap"><canvas id="depositDonut"></canvas><div class="donut-center">30D</div></div><div class="donut-legend" id="depositLegend"></div></div>
+      <div class="chart-main"><canvas id="depositChart" aria-label="最近30天充值"></canvas><div class="line-legend"><span><i style="--c:#5367c5"></i>後台</span><span><i style="--c:#5dbfc0"></i>線上</span></div></div>
+    </article>
+
+    <article class="chart-card" draggable="true" data-widget="withdraw">
+      <button class="drag-handle" type="button" aria-label="拖曳圖表">☰</button>
+      <div class="chart-summary"><h2>最近30天提款</h2><strong id="withdrawTotal">0</strong><span>位置</span><div class="donut-wrap"><canvas id="withdrawDonut"></canvas><div class="donut-center">30D</div></div><div class="donut-legend" id="withdrawLegend"></div></div>
+      <div class="chart-main"><canvas id="withdrawChart" aria-label="最近30天提款"></canvas><div class="line-legend"><span><i style="--c:#5367c5"></i>後台</span><span><i style="--c:#5dbfc0"></i>線上</span></div></div>
+    </article>
+  </section>
+</main>
+
+<div class="modal-layer hidden" id="agentModal" role="dialog" aria-modal="true" aria-labelledby="agentModalTitle"><div class="modal agent-modal"><header><h2 id="agentModalTitle">選擇代理</h2><button type="button" data-close="agentModal">×</button></header><div class="modal-body"><label class="search-box"><span>⌕</span><input id="agentSearch" placeholder="輸入代理商號或代理名稱"></label><label class="include-row"><input id="includeChildren" type="checkbox" checked>包含下級代理</label><div class="agent-table-head"><span></span><span>代理商號</span><span>代理名稱</span><span>上級代理</span><span>層級</span><span>下線數量</span></div><div class="agent-list" id="agentTree"></div><div class="selection-meta"><button id="selectAllAgents" type="button">全選</button><span id="selectedAgentCount">已選 0 項</span></div></div><footer><button class="muted-btn" type="button" data-close="agentModal">取消</button><button class="primary-btn" id="applyAgents" type="button">提交</button></footer></div></div>
+
+<div class="modal-layer hidden" id="exportModal" role="dialog" aria-modal="true" aria-labelledby="exportModalTitle"><div class="modal export-modal"><header><h2 id="exportModalTitle">導出</h2><button type="button" data-close="exportModal">×</button></header><div class="modal-body"><label class="field"><span>導出每日匯報數據</span><div><input id="exportStart" type="date"><b>TO</b><input id="exportEnd" type="date"><button data-export-type="daily" type="button">導出</button></div></label><label class="field"><span>導出各代理數據</span><div><input id="agentsExportStart" type="date"><b>TO</b><input id="agentsExportEnd" type="date"><button data-export-type="agents" type="button">導出</button></div></label><div class="field"><span>導出當前頁面代理數據</span><div class="current-export-scope"><span>代理範圍</span><input id="exportScope" value="全部代理" aria-label="目前頁面代理範圍" readonly></div><div><input id="currentExportStart" type="date" aria-label="當前代理數據開始日期"><b>TO</b><input id="currentExportEnd" type="date" aria-label="當前代理數據結束日期"><button data-export-type="current" type="button">導出</button></div></div></div></div></div>
+
+<div class="tooltip hidden" id="chartTooltip"></div><div class="toast hidden" id="toast"></div>
+<script src="./xlsx-export.js"></script>
+<script src="./script.js"></script>
+</body></html>
