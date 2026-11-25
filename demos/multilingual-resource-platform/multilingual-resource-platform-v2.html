@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>多語言資源平台</title>
+  <link rel="stylesheet" href="multilingual-resource-platform-v2.css?v=20261015-4">
+</head>
+<body class="logged-out">
+  <!-- Demo 登入頁：直接選角色登入 -->
+  <section id="loginPage" class="login-page" aria-labelledby="loginTitle">
+    <div class="login-card">
+      <div class="login-brand"><span class="logo" aria-hidden="true">多</span><h1 id="loginTitle">多語言資源平台</h1></div>
+      <div class="alert alert-warning login-note" role="note"><b>Demo 版說明</b><span>此頁直接選擇角色登入，不需帳號密碼，方便展示各角色權限。正式上線時須改為帳號密碼或公司登入方式。</span></div>
+      <p class="muted login-hint">選擇要使用的角色</p>
+      <div class="login-roles">
+        <button type="button" class="login-role" data-login-role="admin"><span class="avatar">管</span><span><b>超管</b><small>admin01 · 專案、文字、匯出、回收區</small></span></button>
+        <button type="button" class="login-role" data-login-role="planner"><span class="avatar">企</span><span><b>企劃</b><small>planner01 · 與超管權限相同</small></span></button>
+        <button type="button" class="login-role" data-login-role="lead"><span class="avatar">組</span><span><b>美術組長</b><small>artlead01 · 指派、上傳與審核</small></span></button>
+        <button type="button" class="login-role" data-login-role="artist"><span class="avatar">美</span><span><b>美術</b><small>artist08 · 只能操作本人任務</small></span></button>
+        <button type="button" class="login-role" data-login-role="qa"><span class="avatar">QA</span><span><b>QA</b><small>qa0007 · 純查看</small></span></button>
+      </div>
+      <p class="muted login-foot">Demo 資料存在瀏覽器記憶體，重新整理會回到登入頁與示範資料。</p>
+    </div>
+  </section>
+  <div class="layout">
+    <header class="app-header">
+      <div class="header-left">
+        <button class="icon-btn menu-toggle" type="button" aria-label="開啟選單" aria-controls="sider" aria-expanded="false">☰</button>
+        <span class="logo" aria-hidden="true">多</span>
+        <span class="app-name">多語言資源平台</span>
+      </div>
+      <div class="user-switcher">
+        <button id="userMenuButton" class="user-menu" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="roleMenu"><span class="avatar" id="roleAvatar">管</span><span class="user-text"><b id="roleName">超管</b><small id="roleAccount">admin01</small></span><span aria-hidden="true">▾</span></button>
+        <div id="roleMenu" class="dropdown role-menu hidden" role="menu" aria-label="切換 Demo 身分">
+          <div class="dropdown-head">切換 Demo 身分<small>超管與企劃權限相同</small></div>
+          <button type="button" role="menuitemradio" data-role="admin"><span class="avatar">管</span><span><b>超管</b><small>admin01 · 專案、文字、匯出</small></span></button>
+          <button type="button" role="menuitemradio" data-role="lead"><span class="avatar">組</span><span><b>美術組長</b><small>artlead01 · 指派與審核</small></span></button>
+          <button type="button" role="menuitemradio" data-role="artist"><span class="avatar">美</span><span><b>美術</b><small>artist08 · 僅本人任務</small></span></button>
+          <button type="button" role="menuitemradio" data-role="qa"><span class="avatar">QA</span><span><b>QA</b><small>qa0007 · 純查看</small></span></button>
+          <button type="button" id="logoutButton" class="logout-item" role="menuitem">登出（回到登入頁）</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="layout-body">
+      <nav id="sider" class="sider" aria-label="主選單">
+        <button class="menu-item active" type="button" data-page="projects"><span aria-hidden="true">▦</span>專案管理</button>
+        <button class="menu-item" type="button" data-page="archive"><span aria-hidden="true">▤</span>專案封存</button>
+        <button class="menu-item" type="button" data-page="recycle" data-roles="admin planner"><span aria-hidden="true">♲</span>資料回收</button>
+        <button class="menu-item" type="button" data-page="accounts" data-roles="admin planner lead"><span aria-hidden="true">◎</span>帳號管理</button>
+        <button class="menu-item" type="button" data-page="logs" data-roles="admin planner lead"><span aria-hidden="true">≡</span>操作日誌</button>
+      </nav>
+
+      <main class="content">
+        <div class="role-banner" aria-live="polite"><span class="avatar" id="bannerAvatar">管</span><div><b id="bannerTitle">目前以超管身分預覽</b><small id="bannerDesc"></small></div></div>
+
+        <!-- 專案管理 -->
+        <section id="projectsPage" class="page active" aria-labelledby="projectsTitle">
+          <div class="page-head"><h1 id="projectsTitle">專案管理</h1><button id="addProjectBtn" class="btn primary" type="button" data-roles="admin planner">＋ 新增專案</button></div>
+          <div class="card">
+            <div class="tabs" role="tablist" aria-label="專案狀態">
+              <button class="tab active" type="button" role="tab" aria-selected="true" data-tab="all">全部 <span>0</span></button>
+              <button class="tab" type="button" role="tab" aria-selected="false" data-tab="unassigned">待分配 <span>0</span></button>
+              <button class="tab" type="button" role="tab" aria-selected="false" data-tab="in_progress">製作中 <span>0</span></button>
+              <button class="tab" type="button" role="tab" aria-selected="false" data-tab="pending_acceptance">待組長審核 <span>0</span></button>
+              <button class="tab" type="button" role="tab" aria-selected="false" data-tab="review_done">審核完成 <span>0</span></button>
+              <button class="tab" type="button" role="tab" aria-selected="false" data-tab="archived">已封存 <span>0</span></button>
+            </div>
+            <form id="projectFilters" class="filters">
+              <label>專案<input id="projectFilter" class="input" maxlength="50" placeholder="模糊搜尋專案"></label>
+              <label>介面<input id="screenFilter" class="input" maxlength="50" placeholder="模糊搜尋介面"></label>
+              <label>美術<select id="artistFilter" class="input"></select></label>
+              <div class="filter-actions"><button class="btn primary" type="submit">查詢</button><button class="btn" type="reset">重置</button></div>
+            </form>
+            <div class="table-wrap"><table class="table">
+              <thead id="projectHead"><tr><th aria-sort="none"><button type="button" class="sort-btn" data-sort="name">專案名稱<span class="sort-icon" aria-hidden="true"><i class="up"></i><i class="down"></i></span></button></th><th aria-sort="none"><button type="button" class="sort-btn" data-sort="state">狀態<span class="sort-icon" aria-hidden="true"><i class="up"></i><i class="down"></i></span></button></th><th aria-sort="none"><button type="button" class="sort-btn" data-sort="screens">介面<span class="sort-icon" aria-hidden="true"><i class="up"></i><i class="down"></i></span></button></th><th aria-sort="none"><button type="button" class="sort-btn" data-sort="static">靜態美術<span class="sort-icon" aria-hidden="true"><i class="up"></i><i class="down"></i></span></button></th><th aria-sort="none"><button type="button" class="sort-btn" data-sort="motion">動態美術<span class="sort-icon" aria-hidden="true"><i class="up"></i><i class="down"></i></span></button></th><th aria-sort="none"><button type="button" class="sort-btn" data-sort="updated">最後更新<span class="sort-icon" aria-hidden="true"><i class="up"></i><i class="down"></i></span></button></th><th>操作</th></tr></thead>
+              <tbody id="projectRows"></tbody>
+            </table></div>
+            <div id="projectEmpty" class="empty hidden"><b>沒有符合條件的專案</b><span>請調整篩選條件後再試一次</span></div>
+            <footer class="pager"><span id="projectSummary">共 0 筆</span></footer>
+          </div>
+        </section>
+
+        <!-- 專案封存 -->
+        <section id="archivePage" class="page" aria-labelledby="archiveTitle">
+          <div class="page-head"><div><h1 id="archiveTitle">專案封存</h1><p class="muted">已封存專案為唯讀，可查看與匯出；與專案管理的「已封存」篩選為同一份資料。</p></div></div>
+          <div class="card">
+            <form id="archiveFilters" class="filters">
+              <label>專案名稱<input id="archiveKeyword" class="input" maxlength="50" placeholder="搜尋專案名稱"></label>
+              <label>封存起日<input id="archiveFrom" class="input" type="date"></label>
+              <label>封存迄日<input id="archiveTo" class="input" type="date"></label>
+              <div class="filter-actions"><button class="btn primary" type="submit">查詢</button><button class="btn" type="reset">重置</button></div>
+            </form>
+            <p id="archiveError" class="field-error" role="alert"></p>
+            <div class="table-wrap"><table class="table">
+              <thead><tr><th>專案名稱</th><th>介面</th><th>靜態美術</th><th>動態美術</th><th>封存時間</th><th>封存操作人</th><th>狀態</th><th>操作</th></tr></thead>
+              <tbody id="archiveRows"></tbody>
+            </table></div>
+            <div id="archiveEmpty" class="empty hidden"><b id="archiveEmptyTitle">尚無已封存專案</b><span id="archiveEmptyHint"></span></div>
+            <footer class="pager"><span id="archiveSummary">共 0 筆</span></footer>
+          </div>
+        </section>
+
+        <!-- 資料回收 -->
+        <section id="recyclePage" class="page" aria-labelledby="recycleTitle">
+          <div class="page-head"><div><h1 id="recycleTitle">資料回收</h1><p class="muted">刪除的專案、介面與資源保留 30 天，到期由系統永久刪除。只有超管／企劃可以查看與復原。</p></div></div>
+          <div class="card">
+            <form id="recycleFilters" class="filters">
+              <label>名稱<input id="recycleKeyword" class="input" maxlength="50" placeholder="搜尋名稱"></label>
+              <label>類型<select id="recycleType" class="input"><option value="">全部類型</option><option value="project">專案</option><option value="screen">介面</option><option value="resource">資源</option></select></label>
+              <div class="filter-actions"><button class="btn primary" type="submit">查詢</button><button class="btn" type="reset">重置</button></div>
+            </form>
+            <div class="table-wrap"><table class="table">
+              <thead><tr><th>類型</th><th>名稱</th><th>所屬</th><th>刪除者</th><th>刪除時間</th><th>剩餘天數</th><th>操作</th></tr></thead>
+              <tbody id="recycleRows"></tbody>
+            </table></div>
+            <div id="recycleEmpty" class="empty hidden"><b>回收區目前沒有資料</b><span>刪除的專案、介面與資源會出現在這裡</span></div>
+            <footer class="pager"><span id="recycleSummary">共 0 筆</span></footer>
+          </div>
+        </section>
+
+        <!-- 帳號管理 -->
+        <section id="accountsPage" class="page" aria-labelledby="accountsTitle">
+          <div class="page-head"><div><h1 id="accountsTitle">帳號管理</h1><p id="accountsHint" class="muted"></p></div><button id="addAccountBtn" class="btn primary" type="button">＋ 新增帳號</button></div>
+          <div class="card">
+            <form id="accountFilters" class="filters">
+              <label>角色<select id="accountRoleFilter" class="input"></select></label>
+              <label>帳號／暱稱<input id="accountSearch" class="input" maxlength="50" placeholder="精準搜尋帳號或暱稱"></label>
+              <label>狀態<select id="accountStateFilter" class="input"><option value="">全部狀態</option><option value="on">啟用</option><option value="off">已停用</option></select></label>
+              <div class="filter-actions"><button class="btn primary" type="submit">查詢</button><button class="btn" type="reset">重置</button></div>
+            </form>
+            <div class="table-wrap"><table class="table">
+              <thead><tr><th>角色</th><th>帳號</th><th>暱稱</th><th>最後登入</th><th>登入驗證</th><th>狀態</th><th>操作</th></tr></thead>
+              <tbody id="accountRows"></tbody>
+            </table></div>
+            <div id="accountEmpty" class="empty hidden"><b>查無符合條件的帳號</b></div>
+            <footer class="pager"><span id="accountSummary">共 0 筆</span></footer>
+          </div>
+        </section>
+
+        <!-- 操作日誌 -->
+        <section id="logsPage" class="page" aria-labelledby="logsTitle">
+          <div class="page-head"><div><h1 id="logsTitle">操作日誌</h1><p class="muted">唯讀查詢，紀錄保留 1 年；超管、企劃與美術組長可查看。原型中的操作會即時寫入。</p></div></div>
+          <div class="card">
+            <form id="logFilters" class="filters">
+              <label>起日<input id="logFrom" class="input" type="date"></label>
+              <label>迄日<input id="logTo" class="input" type="date"></label>
+              <label>操作人員<select id="logActor" class="input"></select></label>
+              <label>操作類型<select id="logAction" class="input"></select></label>
+              <label>資料類型<select id="logEntity" class="input"><option value="">全部資料</option><option>專案</option><option>介面</option><option>資源</option><option>帳號</option></select></label>
+              <label>資料識別碼<input id="logTarget" class="input" maxlength="50" placeholder="例：btn_invite"></label>
+              <div class="filter-actions"><button class="btn primary" type="submit">查詢</button><button class="btn" type="reset">重置</button></div>
+            </form>
+            <p id="logError" class="field-error" role="alert"></p>
+            <div class="table-wrap"><table class="table">
+              <thead><tr><th>操作時間</th><th>操作人員</th><th>操作項目</th><th>資料類型</th><th>資料識別碼</th><th>異動摘要</th><th>明細</th></tr></thead>
+              <tbody id="logRows"></tbody>
+            </table></div>
+            <div id="logEmpty" class="empty hidden"><b id="logEmptyTitle">尚無操作紀錄</b></div>
+            <footer class="pager" id="logPager"></footer>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- 專案明細抽屜 -->
+  <div id="drawerMask" class="mask hidden"></div>
+  <aside id="drawer" class="drawer" aria-hidden="true" aria-labelledby="drawerProject" role="dialog">
+    <header class="drawer-head">
+      <div class="drawer-title"><button id="closeDrawer" class="icon-btn" type="button" aria-label="關閉專案">✕</button><div><small class="muted">專案管理 /</small> <b id="drawerProject">—</b> <span id="drawerState"></span><small id="drawerFolder" class="muted"></small></div></div>
+      <div class="drawer-actions"><button id="exportBtn" class="btn" type="button" data-roles="admin planner">⇩ 匯出資源</button><button id="addScreenBtn" class="btn primary" type="button" data-roles="admin planner">＋ 新增介面</button></div>
+    </header>
+    <div id="archivedNotice" class="alert alert-info hidden" role="status">此專案已封存，所有內容為唯讀；超管／企劃仍可匯出或取消封存。</div>
+    <div class="drawer-body">
+      <section class="panel">
+        <div class="panel-head"><div><b>介面</b><small class="muted">cocos 與 h5 分別建立；平台篩選變更會清除已選資源</small></div><div class="platforms" role="group" aria-label="平台篩選"><label><input type="checkbox" checked value="cocos"> cocos <small id="cocosSummary" class="muted"></small></label><label><input type="checkbox" checked value="h5"> h5 <small id="h5Summary" class="muted"></small></label></div></div>
+        <div id="screenCards" class="screen-cards"></div>
+        <div id="screenEmpty" class="empty-inline hidden">此專案目前沒有符合平台條件的介面</div>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><div><b>資源</b><small class="muted" id="resourceScope"></small></div><div class="panel-head-right"><span class="platform-legend" aria-label="平台顏色說明">平台：<span class="screen-badge cocos">cocos</span><span class="screen-badge h5">h5</span></span><button id="addResourceBtn" class="btn primary" type="button" data-roles="admin planner">＋ 新增資源</button></div></div>
+        <div class="filters resource-filters">
+          <label>狀態<select id="resourceState" class="input"><option value="all">全部狀態</option><option value="needs_production">待製作</option><option value="pending_review">待查看</option><option value="completed">已審核</option></select></label>
+          <label>介面<select id="resourceScreen" class="input"></select></label>
+          <label>檔名<input id="filenameSearch" class="input" maxlength="50" placeholder="多筆以 , 分隔"></label>
+          <label>原文／翻譯<input id="translationSearch" class="input" maxlength="50"></label>
+          <label>備註<input id="remarkSearch" class="input" maxlength="50" placeholder="製作／組長備註"></label>
+          <div class="filter-actions"><button id="resourceSearchBtn" class="btn primary" type="button">查詢</button><button id="resourceResetBtn" class="btn" type="button">重置</button></div>
+        </div>
+        <div class="column-toggles" role="group" aria-label="顯示語系欄位"><span class="muted">語系欄：</span><button type="button" class="chip active" data-lang="zh" aria-pressed="true">簡中</button><button type="button" class="chip active" data-lang="en" aria-pressed="true">英文</button><button type="button" class="chip active" data-lang="id" aria-pressed="true">印尼文</button><button type="button" class="chip active" data-lang="pt" aria-pressed="true">葡萄牙文</button></div>
+        <section id="bulkBar" class="bulk-bar hidden" aria-label="批次修改資源">
+          <div class="bulk-summary">已選 <strong id="selectedCount">0</strong> 筆資源<small class="muted">（同篩選條件下保留）</small></div>
+          <div class="bulk-fields">
+            <label>修改欄位<select id="bulkField" class="input"></select></label>
+            <label>修改內容<input id="bulkValue" class="input" maxlength="50" placeholder="套用至已選資源"></label>
+            <fieldset id="bulkLimitField" class="bulk-limit"><legend><label><input id="bulkUpdateLimits" type="checkbox"> 更新高寬限制</label></legend><label><input id="bulkFixedWidth" type="checkbox" disabled> 固定寬度</label><label><input id="bulkFixedHeight" type="checkbox" disabled> 固定高度</label></fieldset>
+          </div>
+          <div class="bulk-actions"><button id="bulkCancel" class="btn" type="button">取消選取</button><button id="bulkDelete" class="btn danger-outline" type="button" data-roles="admin planner">移到回收區</button><button id="bulkApply" class="btn primary" type="button">批次修改</button></div>
+        </section>
+        <div class="table-wrap resource-wrap"><table class="table resource-table">
+          <thead><tr><th><input id="selectAllResources" type="checkbox" aria-label="全選目前頁資源"></th><th>資源（cocos 檔名）</th><th>介面</th><th>尺寸限制</th><th class="lang-zh">簡中原文</th><th class="lang-zh">簡中原圖</th><th class="lang-en">英文</th><th class="lang-en">英文資源</th><th class="lang-id">印尼文</th><th class="lang-id">印尼文資源</th><th class="lang-pt">葡萄牙文</th><th class="lang-pt">葡萄牙文資源</th><th>製作備註</th><th>組長備註</th><th>cocos 檔名</th><th>h5 檔名</th><th>組長審核</th></tr></thead>
+          <tbody id="resourceRows"></tbody>
+        </table></div>
+        <div id="resourceEmpty" class="empty hidden"><b>找不到資源</b><span>請調整篩選條件</span></div>
+        <footer class="pager"><span id="resourceSummary"></span><button type="button" class="btn small" id="resourcePrev" aria-label="資源上一頁">上一頁</button><span id="resourcePageLabel" aria-live="polite"></span><button type="button" class="btn small" id="resourceNext" aria-label="資源下一頁">下一頁</button><label class="muted">每頁<select id="resourcePageSize" class="input small"><option value="30">30 筆</option><option value="50">50 筆</option><option value="100">100 筆</option></select></label></footer>
+      </section>
+    </div>
+  </aside>
+
+  <div id="modalHost"></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="multilingual-resource-platform-v2.js?v=20261015-4"></script>
+</body>
+</html>
